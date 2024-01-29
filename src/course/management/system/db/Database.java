@@ -40,21 +40,22 @@ public class Database {
             st = con.createStatement();
             System.out.println("Connection Established!");
             st.execute(
-                    "CREATE TABLE STUDENT(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), mode VARCHAR(255))");
+                    "CREATE TABLE STUDENT(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), phone_number VARCHAR(255), mode VARCHAR(255))");
             System.out.println("Table Created Successfully...");
         } catch (SQLException ea) {
             System.out.println(ea);
         }
     }
 
-    public void addValues(String username, String email, String password, String mode) {
+    public void addValues(String username, String email, String password, String phoneNumber, String mode) {
         url = "jdbc:mysql://localhost:3306/course";
         try {
             con = DriverManager.getConnection(url, this.username, this.password);
             st = con.createStatement();
             System.out.println("Connection Established!");
-            st.execute("INSERT INTO STUDENT(username, email, password, mode) VALUES('" + username + "','" + email
-                    + "','" + password + "','" + mode + "')");
+            st.execute("INSERT INTO STUDENT(username, email, password, phone_number, mode) VALUES('" + username + "','"
+                    + email
+                    + "','" + password + "','" + phoneNumber + "','" + mode + "')");
             System.out.println("Values Inserted Successfully...");
         } catch (SQLException ea) {
             System.out.println(ea);

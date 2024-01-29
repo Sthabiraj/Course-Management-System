@@ -4,6 +4,7 @@
  */
 package course.management.system;
 
+import cms.error.PopupMessage;
 import course.management.system.db.Database;
 import course.management.system.validation.Validation;
 
@@ -12,12 +13,16 @@ import course.management.system.validation.Validation;
  * @author biraj
  */
 public class Signup extends javax.swing.JFrame {
+    PopupMessage pop = new PopupMessage();
+    Database db = new Database();
 
     /**
      * Creates new form Signup
      */
     public Signup() {
         initComponents();
+//        db.createDatabase();
+//        db.createTable();
     }
 
     /**
@@ -54,6 +59,8 @@ public class Signup extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         formMode = new javax.swing.JComboBox<>();
         formEmail = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        formPhoneNumber = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -189,7 +196,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 397, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel9, java.awt.BorderLayout.LINE_START);
@@ -205,7 +212,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 397, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel10, java.awt.BorderLayout.LINE_END);
@@ -251,27 +258,37 @@ public class Signup extends javax.swing.JFrame {
         formEmail.setToolTipText("");
         formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setText("Phone Number");
+
+        formPhoneNumber.setToolTipText("");
+        formPhoneNumber.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(formEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(formUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(formPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(formMode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(formEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(formMode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10)
+                                .addComponent(formPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -288,11 +305,15 @@ public class Signup extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(formPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formMode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -314,20 +335,21 @@ public class Signup extends javax.swing.JFrame {
         String username = formUsername.getText();
         String email = formEmail.getText();
         String password = formPassword.getText();
+        String phoneNumber = formPhoneNumber.getText();
         String mode = formMode.getSelectedItem().toString();
         
         Validation val = new Validation();
         
-        if(val.validateInputs(username, email, password, mode)) {
+        if(val.validateInputs(username, email, password, phoneNumber, mode)) {
             Database db = new Database();
-            db.addValues(username, email, password, mode);
+            db.addValues(username, email, password, phoneNumber, mode);
+            pop.showErrorMessage("Account Created Sucessfully", "");
             // Clear the input fields after successful validation and adding values to the database
             formUsername.setText("");
             formEmail.setText("");
             formPassword.setText("");
+            formPhoneNumber.setText("");
             formMode.setSelectedIndex(0); // Set the combo box to its initial state
-        }else{
-            System.out.println("Input fields are invalid!!");
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -336,7 +358,9 @@ public class Signup extends javax.swing.JFrame {
     }//GEN-LAST:event_formPasswordActionPerformed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        dispose();
     }//GEN-LAST:event_loginButtonMouseClicked
 
     /**
@@ -378,9 +402,11 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JTextField formEmail;
     private javax.swing.JComboBox<String> formMode;
     private javax.swing.JPasswordField formPassword;
+    private javax.swing.JTextField formPhoneNumber;
     private javax.swing.JTextField formUsername;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
