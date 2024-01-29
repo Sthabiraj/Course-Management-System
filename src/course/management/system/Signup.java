@@ -35,7 +35,7 @@ public class Signup extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -106,18 +106,23 @@ public class Signup extends javax.swing.JFrame {
         jLabel3.setText("Log in and pick up where you left off.");
         jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 400, -1));
 
-        jButton3.setBackground(new java.awt.Color(85, 124, 85));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Login");
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+        loginButton.setBackground(new java.awt.Color(85, 124, 85));
+        loginButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(255, 255, 255));
+        loginButton.setText("Login");
+        loginButton.setBorderPainted(false);
+        loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
             }
         });
-        jPanel8.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
+        jPanel8.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(242, 255, 233));
@@ -214,7 +219,7 @@ public class Signup extends javax.swing.JFrame {
         jLabel7.setText("Username");
 
         formUsername.setToolTipText("");
-        formUsername.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        formUsername.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Create Password");
@@ -241,9 +246,10 @@ public class Signup extends javax.swing.JFrame {
         });
 
         formMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Teacher", "Admin" }));
+        formMode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         formEmail.setToolTipText("");
-        formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -299,9 +305,9 @@ public class Signup extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
@@ -328,6 +334,10 @@ public class Signup extends javax.swing.JFrame {
     private void formPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_formPasswordActionPerformed
+
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -370,7 +380,6 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JPasswordField formPassword;
     private javax.swing.JTextField formUsername;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -390,5 +399,6 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JButton loginButton;
     // End of variables declaration//GEN-END:variables
 }
