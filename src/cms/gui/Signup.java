@@ -21,7 +21,7 @@ public class Signup extends javax.swing.JFrame {
      */
     public Signup() {
         initComponents();
-        db.createDatabase("cms");
+        db.createDatabase();
         if(!db.checkTableExistence("student")){
             db.createTable("student", "course");
         }
@@ -32,6 +32,8 @@ public class Signup extends javax.swing.JFrame {
             db.createTable("instructor");
         } 
         this.setLocationRelativeTo(null);
+        coursesLabel.setVisible(false);
+        formCourse.setVisible(false);
     }
 
     /**
@@ -66,11 +68,11 @@ public class Signup extends javax.swing.JFrame {
         formPassword = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        formMode = new javax.swing.JComboBox<>();
+        formCourse = new javax.swing.JComboBox<>();
         formEmail = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        formPhoneNumber = new javax.swing.JTextField();
+        coursesLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        formMode = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -200,7 +202,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
+            .addGap(0, 483, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel9, java.awt.BorderLayout.LINE_START);
@@ -216,7 +218,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 495, Short.MAX_VALUE)
+            .addGap(0, 483, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel10, java.awt.BorderLayout.LINE_END);
@@ -262,27 +264,32 @@ public class Signup extends javax.swing.JFrame {
             }
         });
 
-        formMode.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        formMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Instructor", "Admin" }));
-        formMode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        formCourse.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formCourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Bachelor (Hons) in Computer Science", "BIT", "Bsc CSIT", "MBA" }));
+        formCourse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         formEmail.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         formEmail.setToolTipText("");
         formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        jLabel10.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(67, 93, 67));
-        jLabel10.setText("Phone Number");
-
-        formPhoneNumber.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        formPhoneNumber.setToolTipText("");
-        formPhoneNumber.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        coursesLabel.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        coursesLabel.setForeground(new java.awt.Color(67, 93, 67));
+        coursesLabel.setText("Choose your Course");
 
         jLabel4.setBackground(new java.awt.Color(250, 112, 112));
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(85, 124, 85));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Sign Up");
+
+        formMode.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Instructor", "Admin" }));
+        formMode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        formMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                formModeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -300,11 +307,11 @@ public class Signup extends javax.swing.JFrame {
                             .addComponent(formEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(formPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)
-                            .addComponent(formPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(coursesLabel)
                             .addComponent(jLabel9)
-                            .addComponent(formMode, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(formCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(formMode, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 15, Short.MAX_VALUE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -314,7 +321,7 @@ public class Signup extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,14 +334,14 @@ public class Signup extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(formPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formMode, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(coursesLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(formCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -348,6 +355,17 @@ public class Signup extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formModeActionPerformed
+        if(formMode.getSelectedItem().toString().equals("Student")){
+            coursesLabel.setVisible(true);
+            formCourse.setVisible(true);
+        }
+        else {
+            coursesLabel.setVisible(false);
+            formCourse.setVisible(false);
+        }
+    }//GEN-LAST:event_formModeActionPerformed
+
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_loginButtonActionPerformed
@@ -357,22 +375,43 @@ public class Signup extends javax.swing.JFrame {
         String username = formUsername.getText();
         String email = formEmail.getText();
         String password = formPassword.getText();
-        String phoneNumber = formPhoneNumber.getText();
         String mode = formMode.getSelectedItem().toString();
+        String course = formCourse.getSelectedItem().toString();
+        
 
         Validation val = new Validation();
+        
+        if(!mode.equals("Student")){
+            if (val.validateInputs(username, email, password, mode)) {
+                Database db1 = new Database();
+                db1.addValues(username, email, password, mode);
+                                System.out.println("Mode: "+mode);
 
-        if (val.validateInputs(username, email, password, phoneNumber, mode)) {
-            Database db = new Database();
-            db.addValues(username, email, password, phoneNumber, mode);
-            pop.showErrorMessage("Account Created Sucessfully", "");
-            // Clear the input fields after successful validation and adding values to the
-            // database
-            formUsername.setText("");
-            formEmail.setText("");
-            formPassword.setText("");
-            formPhoneNumber.setText("");
-            formMode.setSelectedIndex(0); // Set the combo box to its initial state
+                pop.showErrorMessage("Account Created Sucessfully", "");
+                // Clear the input fields after successful validation and adding values to the
+                // database
+                formUsername.setText("");
+                formEmail.setText("");
+                formPassword.setText("");
+                formMode.setSelectedIndex(0); // Set the combo box to its initial state
+            }
+        }
+        else{
+            if (val.validateInputs(username, email, password, mode, course)) {
+                Database db1 = new Database();
+                db1.addValues(username, email, password, mode, course);
+                pop.showErrorMessage("Account Created Sucessfully", "");
+                System.out.println(mode);
+                // Clear the input fields after successful validation and adding values to the
+                // database
+                formUsername.setText("");
+                formEmail.setText("");
+                formPassword.setText("");
+    //            formPhoneNumber.setText("");
+                formCourse.setSelectedIndex(0); // Set the combo box to its initial state
+                formCourse.setSelectedIndex(0); // Set the combo box to its initial state
+
+            }
         }
     }// GEN-LAST:event_jButton1MouseClicked
 
@@ -426,14 +465,14 @@ public class Signup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel coursesLabel;
+    private javax.swing.JComboBox<String> formCourse;
     private javax.swing.JTextField formEmail;
     private javax.swing.JComboBox<String> formMode;
     private javax.swing.JPasswordField formPassword;
-    private javax.swing.JTextField formPhoneNumber;
     private javax.swing.JTextField formUsername;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

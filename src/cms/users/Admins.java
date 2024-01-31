@@ -3,8 +3,8 @@ package cms.users;
 public class Admins extends Users {
   private String adminID;
 
-  public Admins(String username, String email, String password, String phoneNumber, String adminID) {
-    super(username, email, password, phoneNumber);
+  public Admins(String username, String email, String password, String adminID) {
+    super(username, email, password);
     this.adminID = adminID;
   }
 

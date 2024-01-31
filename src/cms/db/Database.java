@@ -12,14 +12,14 @@ import cms.users.Users;
 public class Database {
     private Connection con;
 
-    DatabaseInfo dbInfo = new DatabaseInfo("jdbc:mysql://localhost:3306/", "root", "");
+    DatabaseInfo dbInfo = new DatabaseInfo("jdbc:mysql://localhost:3306/", "root", "", "cms");
 
-    public void createDatabase(String databaseName) {
+    public void createDatabase() {
         try {
-            dbInfo.setDbName(databaseName);
+            // dbInfo.setDbName(databaseName);
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
             System.out.println("Connection Established!");
-            try (PreparedStatement stmt = con.prepareStatement("CREATE DATABASE " + databaseName)) {
+            try (PreparedStatement stmt = con.prepareStatement("CREATE DATABASE " + dbInfo.getDbName())) {
                 stmt.execute();
             }
             System.out.println("Database Created Successfully...");
@@ -37,7 +37,7 @@ public class Database {
             System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement(
                     "CREATE TABLE " + tableName
-                            + " (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), phone_number VARCHAR(255))")) {
+                            + " (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255))")) {
                 stmt.execute();
             }
             System.out.println("Table Created Successfully...");
@@ -55,7 +55,7 @@ public class Database {
             System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement(
                     "CREATE TABLE " + tableName
-                            + " (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), phone_number VARCHAR(255), "
+                            + " (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255), "
                             + column + " VARCHAR(255))")) {
                 stmt.execute();
             }
@@ -67,18 +67,18 @@ public class Database {
         }
     }
 
-    public void addValues(String username, String email, String password, String phoneNumber, String mode) {
+    public void addValues(String username, String email, String password, String mode) {
         try {
-            Users user = new Users(username, email, password, phoneNumber);
+            System.out.println(dbInfo.getDbName());
+            Users user = new Users(username, email, password);
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
             System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement(
-                    "INSERT INTO " + mode + "(username, email, password, phone_number) VALUES(?, ?, ?, ?)")) {
+                    "INSERT INTO " + mode.toLowerCase() + "(username, email, password) VALUES(?, ?, ?)")) {
                 stmt.setString(1, user.getUsername());
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.getPassword());
-                stmt.setString(4, user.getPhoneNumber());
                 stmt.execute();
             }
             System.out.println("Values Inserted Successfully...");
@@ -89,26 +89,50 @@ public class Database {
         }
     }
 
-    public void addValues(String username, String email, String password, String phoneNumber, String course,
-            String mode) {
+    public void addValues(String username, String email, String password, String mode, String course) {
         try {
-            dbInfo.setDbName(mode);
+            System.out.println(dbInfo.getDbName());
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
-            Students student = new Students(username, email, password, phoneNumber, course);
+            Students student = new Students(username, email, password, course);
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
             System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement(
-                    "INSERT INTO STUDENT(username, email, password, phone_number, course) VALUES(?, ?, ?, ?, ?)")) {
+                    "INSERT INTO " + mode.toLowerCase() + "(username, email, password, course) VALUES(?, ?, ?, ?)")) {
                 stmt.setString(1, student.getUsername());
                 stmt.setString(2, student.getEmail());
                 stmt.setString(3, student.getPassword());
-                stmt.setString(4, student.getPhoneNumber());
-                stmt.setString(5, student.getCourse());
+                stmt.setString(4, student.getCourse());
                 stmt.execute();
             }
             System.out.println("Values Inserted Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method for login that takes email, password, and mode as parameters and looks
+    // into the database to check if the user exists
+    public boolean login(String email, String password, String mode) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            System.out.println("Connection Established!");
+            try (PreparedStatement stmt = con.prepareStatement(
+                    "SELECT * FROM " + mode.toLowerCase() + " WHERE email = ? AND password = ?")) {
+                stmt.setString(1, email);
+                stmt.setString(2, password);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
         } finally {
             closeConnection();
         }

@@ -4,13 +4,13 @@ public class Students extends Users {
   private String studentID;
   private String course;
 
-  public Students(String username, String email, String password, String phoneNumber, String course) {
-    super(username, email, password, phoneNumber);
+  public Students(String username, String email, String password, String course) {
+    super(username, email, password);
     this.course = course;
   }
 
-  public Students(String username, String email, String password, String phoneNumber, String studentID, String course) {
-    super(username, email, password, phoneNumber);
+  public Students(String username, String email, String password, String studentID, String course) {
+    super(username, email, password);
     this.studentID = studentID;
     this.course = course;
   }

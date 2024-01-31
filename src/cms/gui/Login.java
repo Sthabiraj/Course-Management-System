@@ -4,11 +4,16 @@
  */
 package cms.gui;
 
+import cms.db.Database;
+import cms.error.PopupMessage;
+
 /**
  *
  * @author biraj
  */
 public class Login extends javax.swing.JFrame {
+    
+    PopupMessage pop = new PopupMessage();
 
     /**
      * Creates new form Login
@@ -33,12 +38,12 @@ public class Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        formEmail = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        formMode = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        formPassword = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -85,13 +90,13 @@ public class Login extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(67, 93, 67));
-        jLabel6.setText("Username");
+        jLabel6.setText("Email");
         jPanel8.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jTextField1.setToolTipText("");
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel8.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 290, 30));
+        formEmail.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formEmail.setToolTipText("");
+        formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jPanel8.add(formEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 290, 30));
 
         jLabel5.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(67, 93, 67));
@@ -103,10 +108,10 @@ public class Login extends javax.swing.JFrame {
         jLabel7.setText("Password");
         jPanel8.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
-        jComboBox1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Instructor", "Admin" }));
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel8.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 290, 30));
+        formMode.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Instructor", "Admin" }));
+        formMode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel8.add(formMode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 290, 30));
 
         jButton1.setBackground(new java.awt.Color(250, 112, 112));
         jButton1.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
@@ -121,8 +126,8 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 290, 40));
 
-        jPasswordField2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jPanel8.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 290, 30));
+        formPassword.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jPanel8.add(formPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 290, 30));
 
         jPanel1.add(jPanel8);
 
@@ -217,7 +222,22 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
+        String email = formEmail.getText();
+        String password = formPassword.getText();
+        String mode = formMode.getSelectedItem().toString();
+        Database db = new Database();
+        if(db.login(email, password, mode)){
+            pop.showErrorMessage("Account Logedin Sucessfully", "");
+            Dashboard dash = new Dashboard();
+            dash.setVisible(true);
+            dispose();
+        }
+        else{
+            pop.showErrorMessage("Invalid login details!!");
+        }
+        formEmail.setText("");
+        formPassword.setText("");
+        formMode.setSelectedIndex(0);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
@@ -270,9 +290,11 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField formEmail;
+    private javax.swing.JComboBox<String> formMode;
+    private javax.swing.JPasswordField formPassword;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -286,7 +308,5 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
