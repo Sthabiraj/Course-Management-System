@@ -16,6 +16,57 @@ import cms.error.PopupMessage;
 public class Validation {
     PopupMessage popupMessage = new PopupMessage();
 
+    public boolean validateLogin(String email, String password, String mode) {
+        // Check if any field is empty
+        if (email.equals("") || password.equals("") || mode.equals("Select any one")) {
+            popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        }
+
+        // Define regex patterns
+        String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // At least 8
+                                                                                                      // chars, contains
+                                                                                                      // at least one
+                                                                                                      // digit, one
+                                                                                                      // lower alpha,
+                                                                                                      // one upper
+                                                                                                      // alpha, one
+                                                                                                      // special symbol,
+                                                                                                      // no whitespace
+        String modePattern = "^[a-zA-Z]{4,}$"; // At least 4 alphabetic characters
+
+        // Create pattern and matcher objects
+        Pattern pattern;
+        Matcher matcher;
+
+        // Validate email
+        pattern = Pattern.compile(emailPattern);
+        matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid email");
+            return false;
+        }
+
+        // Validate password
+        pattern = Pattern.compile(passwordPattern);
+        matcher = pattern.matcher(password);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid password");
+            return false;
+        }
+
+        // Validate mode
+        pattern = Pattern.compile(modePattern);
+        matcher = pattern.matcher(mode);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid mode");
+            return false;
+        }
+
+        return true;
+    }
+
     public boolean validateInputs(String username, String email, String password, String mode, String course) {
         // Check if any field is empty
         if (username.equals("") || email.equals("") || password.equals("") || mode.equals("Select any one")

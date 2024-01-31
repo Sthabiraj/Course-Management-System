@@ -6,6 +6,7 @@ package cms.gui;
 
 import cms.db.Database;
 import cms.error.PopupMessage;
+import cms.validation.Validation;
 
 /**
  *
@@ -14,6 +15,7 @@ import cms.error.PopupMessage;
 public class Login extends javax.swing.JFrame {
     
     PopupMessage pop = new PopupMessage();
+    Validation val = new Validation();
 
     /**
      * Creates new form Login
@@ -226,18 +228,20 @@ public class Login extends javax.swing.JFrame {
         String password = formPassword.getText();
         String mode = formMode.getSelectedItem().toString();
         Database db = new Database();
-        if(db.login(email, password, mode)){
-            pop.showErrorMessage("Account Logedin Sucessfully", "");
-            Dashboard dash = new Dashboard();
-            dash.setVisible(true);
-            dispose();
+        if(val.validateLogin(email, password, mode)){
+            if(db.login(email, password, mode)){
+                pop.showErrorMessage("Account Logedin Sucessfully", "");
+                Dashboard dash = new Dashboard();
+                dash.setVisible(true);
+                dispose();
+            }
+            else{
+                pop.showErrorMessage("Invalid login details!!");
+            }
+            formEmail.setText("");
+            formPassword.setText("");
+            formMode.setSelectedIndex(0);
         }
-        else{
-            pop.showErrorMessage("Invalid login details!!");
-        }
-        formEmail.setText("");
-        formPassword.setText("");
-        formMode.setSelectedIndex(0);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
