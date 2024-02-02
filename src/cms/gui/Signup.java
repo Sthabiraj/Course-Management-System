@@ -129,6 +129,7 @@ public class Signup extends javax.swing.JFrame {
         loginButton.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setText("Login");
+        loginButton.setBorder(null);
         loginButton.setBorderPainted(false);
         loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -147,7 +148,7 @@ public class Signup extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome Back!");
-        jPanel8.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 410, -1));
+        jPanel8.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 410, -1));
 
         jPanel2.add(jPanel8, java.awt.BorderLayout.CENTER);
 
@@ -202,7 +203,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 483, Short.MAX_VALUE)
+            .addGap(0, 503, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel9, java.awt.BorderLayout.LINE_START);
@@ -218,7 +219,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 483, Short.MAX_VALUE)
+            .addGap(0, 503, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel10, java.awt.BorderLayout.LINE_END);
@@ -343,7 +344,7 @@ public class Signup extends javax.swing.JFrame {
                 .addComponent(formCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel5.add(jPanel11, java.awt.BorderLayout.CENTER);
