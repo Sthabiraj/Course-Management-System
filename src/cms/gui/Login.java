@@ -36,88 +36,28 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        formEmail = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        formMode = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        formMode = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
         formPassword = new javax.swing.JPasswordField();
+        formEmail = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login Page");
+        setPreferredSize(new java.awt.Dimension(800, 390));
+        getContentPane().setLayout(new java.awt.GridLayout());
 
-        jPanel1.setBackground(new java.awt.Color(242, 255, 233));
+        jPanel1.setBackground(new java.awt.Color(123, 95, 241));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 0));
 
-        jPanel5.setOpaque(false);
-        jPanel5.setPreferredSize(new java.awt.Dimension(400, 100));
-
-        jLabel4.setBackground(new java.awt.Color(250, 112, 112));
-        jLabel4.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(85, 124, 85));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Login");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel5);
-
-        jPanel8.setOpaque(false);
-        jPanel8.setPreferredSize(new java.awt.Dimension(400, 300));
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(67, 93, 67));
-        jLabel6.setText("Email");
-        jPanel8.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
-
-        formEmail.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        formEmail.setToolTipText("");
-        formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel8.add(formEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 290, 30));
-
-        jLabel5.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(67, 93, 67));
-        jLabel5.setText("Mode");
-        jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(67, 93, 67));
-        jLabel7.setText("Password");
-        jPanel8.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
-        formMode.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        formMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Instructor", "Admin" }));
-        formMode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel8.add(formMode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 290, 30));
-
         jButton1.setBackground(new java.awt.Color(250, 112, 112));
-        jButton1.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.setText("Login");
         jButton1.setBorderPainted(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -126,99 +66,123 @@ public class Login extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
-        jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 290, 40));
 
-        formPassword.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jPanel8.add(formPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 290, 30));
-
-        jPanel1.add(jPanel8);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
-
-        jPanel2.setBackground(new java.awt.Color(166, 207, 152));
-        jPanel2.setPreferredSize(new java.awt.Dimension(300, 400));
-
-        jPanel4.setOpaque(false);
-        jPanel4.setPreferredSize(new java.awt.Dimension(300, 70));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel4);
-
-        jPanel3.setOpaque(false);
-        jPanel3.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        jLabel1.setBackground(new java.awt.Color(250, 112, 112));
-        jLabel1.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Hello, Friend!");
-
-        jLabel2.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(242, 255, 233));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Unlock a world of possibilities.");
-
-        jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(242, 255, 233));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Sign up and join the journey.");
-
-        jButton3.setBackground(new java.awt.Color(85, 124, 85));
-        jButton3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Sign Up");
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        formMode.setBackground(new java.awt.Color(123, 95, 241));
+        formMode.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formMode.setForeground(new java.awt.Color(255, 255, 255));
+        formMode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "Student", "Instructor", "Admin" }));
+        formMode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        formMode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                formModeActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jLabel5.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Mode");
+
+        formPassword.setBackground(new java.awt.Color(123, 95, 241));
+        formPassword.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        formPassword.setForeground(new java.awt.Color(255, 255, 255));
+        formPassword.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        formPassword.setCaretColor(new java.awt.Color(255, 255, 255));
+        formPassword.setPreferredSize(new java.awt.Dimension(64, 45));
+
+        formEmail.setBackground(new java.awt.Color(123, 95, 241));
+        formEmail.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        formEmail.setForeground(new java.awt.Color(255, 255, 255));
+        formEmail.setToolTipText("");
+        formEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        formEmail.setCaretColor(new java.awt.Color(255, 255, 255));
+        formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        formEmail.setPreferredSize(new java.awt.Dimension(64, 45));
+        formEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                formEmailActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setBackground(new java.awt.Color(250, 112, 112));
+        jLabel4.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Login");
+
+        jLabel10.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Don't have an account?");
+
+        jLabel11.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Sign Up");
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(formEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(formPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(formMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 33, Short.MAX_VALUE)))
                 .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel11)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel4)
+                .addGap(24, 24, 24)
+                .addComponent(formEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(formPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(formMode, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel3);
+        getContentPane().add(jPanel1);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 400));
+        jPanel2.setLayout(new java.awt.GridLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/illustrations/Analytics.png"))); // NOI18N
+        jPanel2.add(jLabel1);
+
+        getContentPane().add(jPanel2);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -243,6 +207,20 @@ public class Login extends javax.swing.JFrame {
             formMode.setSelectedIndex(0);
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void formEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formEmailActionPerformed
+
+    private void formModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formModeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formModeActionPerformed
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        Signup signup = new Signup();
+        signup.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -298,19 +276,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> formMode;
     private javax.swing.JPasswordField formPassword;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel8;
     // End of variables declaration//GEN-END:variables
 }
