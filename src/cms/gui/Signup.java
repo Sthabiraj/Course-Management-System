@@ -187,7 +187,7 @@ public class Signup extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(250, 112, 112));
         jButton1.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 51));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Sign Up");
         jButton1.setBorderPainted(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
