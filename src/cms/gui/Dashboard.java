@@ -4,6 +4,7 @@
  */
 package cms.gui;
 
+import cms.db.Database;
 import java.awt.Font;
 
 
@@ -24,6 +25,8 @@ public class Dashboard extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         dashboardBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
         tabs.setSelectedIndex(0);
+        Database db = new Database();
+        db.getActivities(activitiesTable);
     }
 
     /**
@@ -37,8 +40,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         dashboardBtn = new javax.swing.JLabel();
@@ -46,7 +50,6 @@ public class Dashboard extends javax.swing.JFrame {
         tutorsBtn = new javax.swing.JLabel();
         studentsBtn = new javax.swing.JLabel();
         settingsBtn = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         tabs = new javax.swing.JTabbedPane();
         dashboardTab = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -66,7 +69,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        activitiesTable = new javax.swing.JTable();
         coursesTab = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -118,61 +121,70 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setOpaque(false);
-        jPanel3.setPreferredSize(new java.awt.Dimension(220, 120));
+        jPanel3.setPreferredSize(new java.awt.Dimension(220, 140));
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/illustrations/logo.png"))); // NOI18N
+        jLabel19.setPreferredSize(new java.awt.Dimension(100, 120));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 120, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         jPanel4.setOpaque(false);
-        jPanel4.setPreferredSize(new java.awt.Dimension(220, 80));
+        jPanel4.setPreferredSize(new java.awt.Dimension(220, 100));
+
+        jLabel24.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/logout.png"))); // NOI18N
+        jLabel24.setText("Logout");
+        jLabel24.setToolTipText("");
+        jLabel24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel24.setIconTextGap(7);
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 50, Short.MAX_VALUE)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
-        jPanel5.setOpaque(false);
-        jPanel5.setPreferredSize(new java.awt.Dimension(30, 300));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel5, java.awt.BorderLayout.LINE_END);
-
         jPanel8.setOpaque(false);
-        jPanel8.setPreferredSize(new java.awt.Dimension(40, 300));
+        jPanel8.setPreferredSize(new java.awt.Dimension(50, 300));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,14 +194,15 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.add(jPanel8, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.GridLayout(6, 0));
+        jPanel2.setLayout(new java.awt.GridLayout(5, 0));
 
         dashboardBtn.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
         dashboardBtn.setForeground(new java.awt.Color(255, 255, 255));
         dashboardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/dashboard.png"))); // NOI18N
         dashboardBtn.setText("Dashboard");
         dashboardBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        dashboardBtn.setIconTextGap(7);
+        dashboardBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        dashboardBtn.setIconTextGap(9);
         dashboardBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dashboardBtnMouseClicked(evt);
@@ -202,7 +215,7 @@ public class Dashboard extends javax.swing.JFrame {
         coursesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/courses.png"))); // NOI18N
         coursesBtn.setText("Courses");
         coursesBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        coursesBtn.setIconTextGap(6);
+        coursesBtn.setIconTextGap(7);
         coursesBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 coursesBtnMouseClicked(evt);
@@ -215,7 +228,7 @@ public class Dashboard extends javax.swing.JFrame {
         tutorsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/tutors.png"))); // NOI18N
         tutorsBtn.setText("Tutors");
         tutorsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tutorsBtn.setIconTextGap(6);
+        tutorsBtn.setIconTextGap(7);
         tutorsBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tutorsBtnMouseClicked(evt);
@@ -228,7 +241,7 @@ public class Dashboard extends javax.swing.JFrame {
         studentsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/students.png"))); // NOI18N
         studentsBtn.setText("Students");
         studentsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        studentsBtn.setIconTextGap(6);
+        studentsBtn.setIconTextGap(7);
         studentsBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 studentsBtnMouseClicked(evt);
@@ -241,27 +254,13 @@ public class Dashboard extends javax.swing.JFrame {
         settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/setting.png"))); // NOI18N
         settingsBtn.setText("Settings");
         settingsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        settingsBtn.setIconTextGap(6);
+        settingsBtn.setIconTextGap(7);
         settingsBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 settingsBtnMouseClicked(evt);
             }
         });
         jPanel2.add(settingsBtn);
-
-        jLabel24.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/logout.png"))); // NOI18N
-        jLabel24.setText("Logout");
-        jLabel24.setToolTipText("");
-        jLabel24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel24.setIconTextGap(6);
-        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel24MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel24);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -271,28 +270,28 @@ public class Dashboard extends javax.swing.JFrame {
 
         dashboardTab.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(85, 124, 85));
+        jLabel2.setFont(new java.awt.Font("Poppins ExtraBold", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(123, 95, 241));
         jLabel2.setText("Dashboard");
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.GridLayout(1, 3, 20, 0));
 
-        jPanel7.setBackground(new java.awt.Color(255, 188, 188));
+        jPanel7.setBackground(new java.awt.Color(123, 95, 241));
         jPanel7.setForeground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 153));
         jLabel1.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Total Courses");
 
         jLabel3.setFont(new java.awt.Font("Poppins ExtraBold", 0, 48)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("5");
 
-        jSeparator2.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -302,7 +301,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                     .addComponent(jSeparator2))
                 .addContainerGap())
         );
@@ -320,20 +319,20 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel6.add(jPanel7);
 
-        jPanel10.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel10.setBackground(new java.awt.Color(123, 95, 241));
 
         jLabel5.setBackground(new java.awt.Color(153, 153, 153));
         jLabel5.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Total Teachers");
 
         jLabel4.setFont(new java.awt.Font("Poppins ExtraBold", 0, 48)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("10");
 
-        jSeparator3.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -343,7 +342,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                     .addComponent(jSeparator3))
                 .addContainerGap())
         );
@@ -361,18 +360,18 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel6.add(jPanel10);
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel9.setBackground(new java.awt.Color(123, 95, 241));
 
         jLabel6.setBackground(new java.awt.Color(153, 153, 153));
         jLabel6.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Total Students");
 
-        jSeparator4.setForeground(new java.awt.Color(153, 153, 153));
+        jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel7.setFont(new java.awt.Font("Poppins ExtraBold", 0, 48)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("200");
 
@@ -384,7 +383,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                     .addComponent(jSeparator4))
                 .addContainerGap())
         );
@@ -402,44 +401,36 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel6.add(jPanel9);
 
+        jLabel8.setBackground(new java.awt.Color(123, 95, 241));
         jLabel8.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(61, 89, 61));
+        jLabel8.setForeground(new java.awt.Color(123, 95, 241));
         jLabel8.setText("Activities History");
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(123, 95, 241), 1, true));
         jScrollPane1.setOpaque(false);
 
-        jTable1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        activitiesTable.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        activitiesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "ID", "Activity Name"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(500);
+        jScrollPane1.setViewportView(activitiesTable);
+        if (activitiesTable.getColumnModel().getColumnCount() > 0) {
+            activitiesTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+            activitiesTable.getColumnModel().getColumn(1).setPreferredWidth(500);
         }
 
         javax.swing.GroupLayout dashboardTabLayout = new javax.swing.GroupLayout(dashboardTab);
@@ -447,9 +438,9 @@ public class Dashboard extends javax.swing.JFrame {
         dashboardTabLayout.setHorizontalGroup(
             dashboardTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardTabLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(dashboardTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addGroup(dashboardTabLayout.createSequentialGroup()
                         .addGroup(dashboardTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,7 +448,7 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
         dashboardTabLayout.setVerticalGroup(
             dashboardTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,8 +462,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         tabs.addTab("tab1", dashboardTab);
@@ -1088,6 +1079,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable activitiesTable;
     private javax.swing.JLabel coursesBtn;
     private javax.swing.JPanel coursesTab;
     private javax.swing.JLabel dashboardBtn;
@@ -1114,6 +1106,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
@@ -1128,7 +1121,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -1147,7 +1139,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;

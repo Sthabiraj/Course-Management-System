@@ -352,6 +352,10 @@ public class Signup extends javax.swing.JFrame {
                 formEmail.setText("");
                 formPassword.setText("");
                 formMode.setSelectedIndex(0); // Set the combo box to its initial state
+                
+                Dashboard dash = new Dashboard();
+                dash.setVisible(true);
+                dispose();
             }
         }
         else{
@@ -368,7 +372,10 @@ public class Signup extends javax.swing.JFrame {
     //            formPhoneNumber.setText("");
                 formCourse.setSelectedIndex(0); // Set the combo box to its initial state
                 formCourse.setSelectedIndex(0); // Set the combo box to its initial state
-
+                
+                Dashboard dash = new Dashboard();
+                dash.setVisible(true);
+                dispose();
             }
         }
     }// GEN-LAST:event_jButton1MouseClicked

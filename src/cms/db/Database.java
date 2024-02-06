@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import cms.users.Students;
 import cms.users.Users;
 
@@ -80,6 +83,7 @@ public class Database {
                 stmt.setString(2, user.getEmail());
                 stmt.setString(3, user.getPassword());
                 stmt.execute();
+                addActivity(email, mode, "added");
             }
             System.out.println("Values Inserted Successfully...");
         } catch (SQLException e) {
@@ -103,6 +107,7 @@ public class Database {
                 stmt.setString(3, student.getPassword());
                 stmt.setString(4, student.getCourse());
                 stmt.execute();
+                addActivity(email, mode, "added");
             }
             System.out.println("Values Inserted Successfully...");
         } catch (SQLException e) {
@@ -196,6 +201,48 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e);
             return false;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to add activities into the DB
+    public void addActivity(String email, String mode, String activityName) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            System.out.println("Connection Established!");
+            try (PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO activity (activity_name) VALUES(?)")) {
+                stmt.setString(1,
+                        mode + ": " + email + " recently " + activityName + ". Time: " + java.time.LocalDateTime.now());
+                stmt.execute();
+            }
+            System.out.println("Values Inserted Successfully...");
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to get activities from the DB
+    public void getActivities(JTable tableVar) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            System.out.println("Connection Established!");
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM activity")) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        String dbData[] = { String.valueOf(rs.getInt("id")), rs.getString("activity_name") };
+                        DefaultTableModel tblModel = (DefaultTableModel) tableVar.getModel();
+                        tblModel.addRow(dbData);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         } finally {
             closeConnection();
         }
