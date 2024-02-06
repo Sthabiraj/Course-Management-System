@@ -83,13 +83,13 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setText("Mode");
 
         formPassword.setBackground(new java.awt.Color(123, 95, 241));
-        formPassword.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        formPassword.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         formPassword.setForeground(new java.awt.Color(255, 255, 255));
         formPassword.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         formPassword.setCaretColor(new java.awt.Color(255, 255, 255));
 
         formEmail.setBackground(new java.awt.Color(123, 95, 241));
-        formEmail.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        formEmail.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         formEmail.setForeground(new java.awt.Color(255, 255, 255));
         formEmail.setToolTipText("");
         formEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N

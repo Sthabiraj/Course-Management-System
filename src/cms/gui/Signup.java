@@ -76,7 +76,7 @@ public class Signup extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel8.setOpaque(false);
-        jPanel8.setLayout(new java.awt.GridLayout());
+        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/illustrations/Login.png"))); // NOI18N
@@ -136,7 +136,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 432, Short.MAX_VALUE)
+            .addGap(0, 444, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel9, java.awt.BorderLayout.LINE_START);
@@ -152,7 +152,7 @@ public class Signup extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 432, Short.MAX_VALUE)
+            .addGap(0, 444, Short.MAX_VALUE)
         );
 
         jPanel5.add(jPanel10, java.awt.BorderLayout.LINE_END);
@@ -170,11 +170,10 @@ public class Signup extends javax.swing.JFrame {
         formUsername.setPreferredSize(new java.awt.Dimension(64, 45));
 
         formPassword.setBackground(new java.awt.Color(123, 95, 241));
-        formPassword.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formPassword.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         formPassword.setForeground(new java.awt.Color(255, 255, 255));
         formPassword.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Create Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         formPassword.setCaretColor(new java.awt.Color(255, 255, 255));
-        formPassword.setPreferredSize(new java.awt.Dimension(64, 45));
         formPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formPasswordActionPerformed(evt);
@@ -204,7 +203,7 @@ public class Signup extends javax.swing.JFrame {
         formCourse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         formEmail.setBackground(new java.awt.Color(123, 95, 241));
-        formEmail.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        formEmail.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         formEmail.setForeground(new java.awt.Color(255, 255, 255));
         formEmail.setToolTipText("");
         formEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -257,7 +256,7 @@ public class Signup extends javax.swing.JFrame {
                 .addContainerGap())
             .addComponent(formMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(formCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(formPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(formPassword)
             .addComponent(formEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(formUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
