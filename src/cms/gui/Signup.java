@@ -335,48 +335,56 @@ public class Signup extends javax.swing.JFrame {
         String mode = formMode.getSelectedItem().toString();
         String course = formCourse.getSelectedItem().toString();
         
+        if(!db.checkUserExistence(email, mode)){
+            Validation val = new Validation();
+            if(!mode.equals("Student")){
+                if (val.validateInputs(username, email, password, mode)) {
+                    Database db1 = new Database();
+                    db1.addValues(username, email, password, mode);
+                                    System.out.println("Mode: "+mode);
 
-        Validation val = new Validation();
-        
-        if(!mode.equals("Student")){
-            if (val.validateInputs(username, email, password, mode)) {
-                Database db1 = new Database();
-                db1.addValues(username, email, password, mode);
-                                System.out.println("Mode: "+mode);
+                    pop.showErrorMessage("Account Created Sucessfully", "");
+                    // Clear the input fields after successful validation and adding values to the
+                    // database
+                    formUsername.setText("");
+                    formEmail.setText("");
+                    formPassword.setText("");
+                    formMode.setSelectedIndex(0); // Set the combo box to its initial state
 
-                pop.showErrorMessage("Account Created Sucessfully", "");
-                // Clear the input fields after successful validation and adding values to the
-                // database
-                formUsername.setText("");
-                formEmail.setText("");
-                formPassword.setText("");
-                formMode.setSelectedIndex(0); // Set the combo box to its initial state
-                
-                Dashboard dash = new Dashboard();
-                dash.setVisible(true);
-                dispose();
+                    Dashboard dash = new Dashboard();
+                    dash.setVisible(true);
+                    dispose();
+                }
+            }
+            else{
+                if (val.validateInputs(username, email, password, mode, course)) {
+                    Database db1 = new Database();
+                    db1.addValues(username, email, password, mode, course);
+                    pop.showErrorMessage("Account Created Sucessfully", "");
+                    System.out.println(mode);
+                    // Clear the input fields after successful validation and adding values to the
+                    // database
+                    formUsername.setText("");
+                    formEmail.setText("");
+                    formPassword.setText("");
+                    formCourse.setSelectedIndex(0); // Set the combo box to its initial state
+                    formCourse.setSelectedIndex(0); // Set the combo box to its initial state
+
+                    Dashboard dash = new Dashboard();
+                    dash.setVisible(true);
+                    dispose();
+                }
             }
         }
         else{
-            if (val.validateInputs(username, email, password, mode, course)) {
-                Database db1 = new Database();
-                db1.addValues(username, email, password, mode, course);
-                pop.showErrorMessage("Account Created Sucessfully", "");
-                System.out.println(mode);
-                // Clear the input fields after successful validation and adding values to the
-                // database
-                formUsername.setText("");
-                formEmail.setText("");
-                formPassword.setText("");
-    //            formPhoneNumber.setText("");
-                formCourse.setSelectedIndex(0); // Set the combo box to its initial state
-                formCourse.setSelectedIndex(0); // Set the combo box to its initial state
-                
-                Dashboard dash = new Dashboard();
-                dash.setVisible(true);
-                dispose();
-            }
+            pop.showErrorMessage("Email already used!!");
+            formUsername.setText("");
+            formEmail.setText("");
+            formPassword.setText("");
+            formCourse.setSelectedIndex(0); // Set the combo box to its initial state
+            formCourse.setSelectedIndex(0); // Set the combo box to its initial state
         }
+   
     }// GEN-LAST:event_jButton1MouseClicked
 
     private void formPasswordActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_formPasswordActionPerformed

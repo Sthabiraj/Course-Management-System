@@ -188,4 +188,48 @@ public class Validation {
 
         return true;
     }
+
+    // method to validate course inputs
+    public boolean validateCourseInputs(String courseName, int seats, int duration) {
+        // Check if any field is empty
+        if (courseName.equals("") || seats == 0) {
+            popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        }
+
+        // Define regex patterns
+        String courseNamePattern = "^[a-zA-Z ]{3,}$"; // At least 3 characters, and space
+        String seatsPattern = "^[0-9]{1,}$"; // At least 1 digit
+        String durationPattern = "^[0-9]{1,}$"; // At least 1 digit
+
+        // Create pattern and matcher objects
+        Pattern pattern;
+        Matcher matcher;
+
+        // Validate courseName
+        pattern = Pattern.compile(courseNamePattern);
+        matcher = pattern.matcher(courseName);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid course name");
+            return false;
+        }
+
+        // Validate seats
+        pattern = Pattern.compile(seatsPattern);
+        matcher = pattern.matcher(String.valueOf(seats));
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid seats");
+            return false;
+        }
+
+        // Validate duration
+        pattern = Pattern.compile(durationPattern);
+        matcher = pattern.matcher(String.valueOf(duration));
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid duration");
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -5,11 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import cms.courses.Courses;
 import cms.users.Students;
 import cms.users.Users;
 
@@ -26,7 +28,6 @@ public class Database {
             try (PreparedStatement stmt = con.prepareStatement("CREATE DATABASE " + dbInfo.getDbName())) {
                 stmt.execute();
             }
-            System.out.println("Database Created Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -44,7 +45,6 @@ public class Database {
                             + " (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), email VARCHAR(255), password VARCHAR(255))")) {
                 stmt.execute();
             }
-            System.out.println("Table Created Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -63,7 +63,6 @@ public class Database {
                             + column + " VARCHAR(255))")) {
                 stmt.execute();
             }
-            System.out.println("Table Created Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -86,7 +85,6 @@ public class Database {
                 stmt.execute();
                 addActivity(email, mode, "added");
             }
-            System.out.println("Values Inserted Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -110,9 +108,31 @@ public class Database {
                 stmt.execute();
                 addActivity(email, mode, "added");
             }
-            System.out.println("Values Inserted Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to check if the user exists
+    public boolean checkUserExistence(String email, String mode) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT * FROM " + mode.toLowerCase() + " WHERE email = ?")) {
+                stmt.setString(1, email);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
         } finally {
             closeConnection();
         }
@@ -124,7 +144,6 @@ public class Database {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
-            System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement(
                     "SELECT * FROM " + mode.toLowerCase() + " WHERE email = ? AND password = ?")) {
                 stmt.setString(1, email);
@@ -212,14 +231,12 @@ public class Database {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
-            System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO activity (activity_name) VALUES(?)")) {
                 stmt.setString(1,
                         mode + ": " + email + " recently " + activityName + ". Time: " + java.time.LocalDateTime.now());
                 stmt.execute();
             }
-            System.out.println("Values Inserted Successfully...");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -232,7 +249,6 @@ public class Database {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
-            System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM activity")) {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
@@ -254,7 +270,6 @@ public class Database {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
-            System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM " + tableName)) {
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
@@ -269,6 +284,74 @@ public class Database {
         } finally {
             closeConnection();
         }
+    }
+
+    // Method to add courses into the DB
+    public void addCourses(String courseName, int seats, int duration) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO courses (course_name, seats, duration) VALUES(?, ?, ?)")) {
+                stmt.setString(1, courseName);
+                stmt.setInt(2, seats);
+                stmt.setInt(3, duration);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to get courses from the DB
+    public void getCourses(JTable tableVar) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM courses")) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        String dbData[] = { String.valueOf(rs.getInt("id")), rs.getString("course_name"),
+                                String.valueOf(rs.getInt("seats")), String.valueOf(rs.getInt("duration")) };
+                        DefaultTableModel tblModel = (DefaultTableModel) tableVar.getModel();
+                        tblModel.addRow(dbData);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public List<Courses> fetchCoursesFromDatabase() {
+        List<Courses> courses = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM courses")) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String name = rs.getString("course_name");
+                        int seats = rs.getInt("seats");
+                        int duration = rs.getInt("duration");
+
+                        // Create a Course object and add it to the list
+                        Courses course = new Courses(id, name, seats, duration);
+                        courses.add(course);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return courses;
     }
 
 }
