@@ -1386,6 +1386,13 @@ public class Dashboard extends javax.swing.JFrame {
                 pack();
         }// </editor-fold>//GEN-END:initComponents
 
+        /**
+         * Event handler for the key released event of the jTextField1 component.
+         * Updates the row filter of the coursesTable based on the text entered in the
+         * jTextField1.
+         * 
+         * @param evt The key event that triggered the method.
+         */
         private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jTextField1KeyReleased
                 DefaultTableModel model = (DefaultTableModel) coursesTable.getModel();
                 TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -1607,7 +1614,7 @@ public class Dashboard extends javax.swing.JFrame {
         private javax.swing.JLabel coursesBtn;
         private javax.swing.JLabel coursesCount;
         private javax.swing.JPanel coursesTab;
-        private static javax.swing.JTable coursesTable;
+        private javax.swing.JTable coursesTable;
         private javax.swing.JLabel dashboardBtn;
         private javax.swing.JPanel dashboardTab;
         private javax.swing.JButton jButton1;
