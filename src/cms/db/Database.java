@@ -363,6 +363,33 @@ public class Database {
         }
     }
 
+    // Method to check if the course exists
+    public boolean checkCourseExistence(String courseName) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            boolean courseExists = false;
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT * FROM courses WHERE course_name = ?")) {
+                stmt.setString(1, courseName);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        courseExists = true;
+                    }
+                }
+            }
+
+            return courseExists;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to fetch courses from the database
     public List<Courses> fetchCoursesFromDatabase() {
         List<Courses> courses = new ArrayList<>();
         try {

@@ -7,6 +7,7 @@ package cms.validation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cms.db.Database;
 import cms.error.PopupMessage;
 
 /**
@@ -194,6 +195,11 @@ public class Validation {
         // Check if any field is empty
         if (courseName.equals("") || seats == 0) {
             popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        }
+        Database db = new Database();
+        if (db.checkCourseExistence(courseName)) {
+            popupMessage.showErrorMessage("Course already exists");
             return false;
         }
 
