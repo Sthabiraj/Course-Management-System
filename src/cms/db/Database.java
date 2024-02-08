@@ -327,6 +327,42 @@ public class Database {
         }
     }
 
+    // Method to update courses in the DB
+    public void updateCourses(int id, String courseName, int seats, int duration) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE courses SET course_name = ?, seats = ?, duration = ? WHERE id = ?")) {
+                stmt.setString(1, courseName);
+                stmt.setInt(2, seats);
+                stmt.setInt(3, duration);
+                stmt.setInt(4, id);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to delete courses from the DB
+    public void deleteCourse(int id) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("DELETE FROM courses WHERE id = ?")) {
+                stmt.setInt(1, id);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
     public List<Courses> fetchCoursesFromDatabase() {
         List<Courses> courses = new ArrayList<>();
         try {

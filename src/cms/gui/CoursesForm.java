@@ -5,6 +5,8 @@
 package cms.gui;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import cms.db.Database;
 import cms.validation.Validation;
@@ -14,6 +16,25 @@ import cms.validation.Validation;
  * @author biraj
  */
 public class CoursesForm extends javax.swing.JFrame {
+    private boolean isEditMode;
+    private int selectedIndex;
+    private JTable table;
+
+    public void setSelectedIndex(int index) {
+        this.selectedIndex = index;
+    }
+
+    public int getSelectedIndex() {
+        return this.selectedIndex;
+    }
+
+    public void setTable(JTable table) {
+        this.table = table;
+    }
+
+    public JTable getTable() {
+        return this.table;
+    }
 
     /**
      * Creates new form CoursesForm
@@ -21,6 +42,24 @@ public class CoursesForm extends javax.swing.JFrame {
     public CoursesForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        jButton1.setText("Add");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/add.png")));
+        this.setTitle("Add Course");
+    }
+
+    public CoursesForm(boolean isEditMode, JTable table, int selectedIndex) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.isEditMode = isEditMode;
+        this.table = table;
+        this.selectedIndex = selectedIndex;
+        jButton1.setText("Update");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/edit.png")));
+        this.setTitle("Update Course");
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        courseName.setText(model.getValueAt(selectedIndex, 1).toString());
+        courseSeats.setText(model.getValueAt(selectedIndex, 2).toString());
+        courseDuration.setSelectedItem(model.getValueAt(selectedIndex, 3).toString());
     }
 
     /**
@@ -173,16 +212,39 @@ public class CoursesForm extends javax.swing.JFrame {
     }// GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
-        String course_name = courseName.getText();
-        int course_seats = Integer.parseInt(courseSeats.getText());
-        int course_duration = Integer.parseInt(courseDuration.getSelectedItem().toString());
-        Validation val = new Validation();
-        if (val.validateCourseInputs(course_name, course_seats, course_duration)) {
-            Database db = new Database();
-            db.addCourses(course_name, course_seats, course_duration);
-            dispose();
-            JOptionPane.showMessageDialog(null, "Course added successfully.");
-            Dashboard.updateCoursesTable();
+        if (isEditMode) {
+            int id = Integer.parseInt(table.getValueAt(selectedIndex, 0).toString());
+            String course_name = courseName.getText();
+            int course_seats = Integer.parseInt(courseSeats.getText());
+            int course_duration = Integer.parseInt(courseDuration.getSelectedItem().toString());
+            Validation val = new Validation();
+            if (val.validateCourseInputs(course_name, course_seats, course_duration)) {
+                Database db = new Database();
+                db.updateCourses(id, course_name, course_seats, course_duration);
+                dispose();
+                JOptionPane.showMessageDialog(null, "Course updated successfully.");
+                Dashboard.updateCoursesTable();
+                // reset the form
+                courseName.setText("");
+                courseSeats.setText("");
+                courseDuration.setSelectedIndex(0);
+            }
+        } else {
+            String course_name = courseName.getText();
+            int course_seats = Integer.parseInt(courseSeats.getText());
+            int course_duration = Integer.parseInt(courseDuration.getSelectedItem().toString());
+            Validation val = new Validation();
+            if (val.validateCourseInputs(course_name, course_seats, course_duration)) {
+                Database db = new Database();
+                db.addCourses(course_name, course_seats, course_duration);
+                dispose();
+                JOptionPane.showMessageDialog(null, "Course added successfully.");
+                Dashboard.updateCoursesTable();
+                // reset the form
+                courseName.setText("");
+                courseSeats.setText("");
+                courseDuration.setSelectedIndex(0);
+            }
         }
     }// GEN-LAST:event_jButton1MouseClicked
 
