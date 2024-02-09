@@ -428,4 +428,45 @@ public class Validation {
 
         return true;
     }
+
+    // Method to validate student inputs
+    public boolean validateStudentInputs(int id, String studentName, String email) {
+        // Check if any field is empty
+        if (studentName.equals("") || email.equals("")) {
+            popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        }
+
+        Database db = new Database();
+        if (db.checkUserExistence(id, email, "student")) {
+            popupMessage.showErrorMessage("Student already exists");
+            return false;
+        }
+
+        // Define regex patterns
+        String studentNamePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
+        String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
+
+        // Create pattern and matcher objects
+        Pattern pattern;
+        Matcher matcher;
+
+        // Validate studentName
+        pattern = Pattern.compile(studentNamePattern);
+        matcher = pattern.matcher(studentName);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid student name");
+            return false;
+        }
+
+        // Validate email
+        pattern = Pattern.compile(emailPattern);
+        matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid email");
+            return false;
+        }
+
+        return true;
+    }
 }

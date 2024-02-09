@@ -705,4 +705,68 @@ public class Database {
         }
     }
 
+    // Method to fetch students from the database
+    public List<Students> fetchStudentsFromDatabase() {
+        List<Students> students = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM student")) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String username = rs.getString("username");
+                        String email = rs.getString("email");
+                        String password = rs.getString("password");
+                        String course = rs.getString("course");
+
+                        // Create a Student object and add it to the list
+                        Students student = new Students(id, username, email, password, course);
+                        students.add(student);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return students;
+    }
+
+    // Method to update students username, email, and course in the DB
+    public void updateStudents(int id, String username, String email, String course) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("UPDATE student SET username = ?, email = ?, course = ? WHERE id = ?")) {
+                stmt.setString(1, username);
+                stmt.setString(2, email);
+                stmt.setString(3, course);
+                stmt.setInt(4, id);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to delete students from the DB
+    public void deleteStudent(int id) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("DELETE FROM student WHERE id = ?")) {
+                stmt.setInt(1, id);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
 }

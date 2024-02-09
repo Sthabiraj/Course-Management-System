@@ -20,22 +20,6 @@ public class CoursesForm extends javax.swing.JFrame {
     private int selectedIndex;
     private JTable table;
 
-    public void setSelectedIndex(int index) {
-        this.selectedIndex = index;
-    }
-
-    public int getSelectedIndex() {
-        return this.selectedIndex;
-    }
-
-    public void setTable(JTable table) {
-        this.table = table;
-    }
-
-    public JTable getTable() {
-        return this.table;
-    }
-
     /**
      * Creates new form CoursesForm
      */

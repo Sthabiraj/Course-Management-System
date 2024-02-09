@@ -6,6 +6,7 @@ package cms.gui;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import cms.db.Database;
 import cms.validation.Validation;
@@ -14,25 +15,30 @@ import cms.validation.Validation;
  *
  * @author biraj
  */
-public class TutorsForm extends javax.swing.JFrame {
+public class StudentsForm extends javax.swing.JFrame {
     private int selectedIndex;
     private JTable table;
 
     /**
-     * Creates new form TutorsForm
+     * Creates new form StudentsForm
      */
-    public TutorsForm() {
+
+    public StudentsForm() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    public TutorsForm(JTable table, int selectedIndex) {
+    public StudentsForm(JTable table, int selectedIndex) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.selectedIndex = selectedIndex;
         this.table = table;
-        formUsername.setText(table.getValueAt(selectedIndex, 1).toString());
-        formEmail.setText(table.getValueAt(selectedIndex, 2).toString());
+        this.selectedIndex = selectedIndex;
+        Database db = new Database();
+        db.fetchCourseNamesFromDatabase(courseName);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        studentName.setText(model.getValueAt(selectedIndex, 1).toString());
+        studentEmail.setText(model.getValueAt(selectedIndex, 2).toString());
+        courseName.setSelectedItem(model.getValueAt(selectedIndex, 3).toString());
     }
 
     /**
@@ -42,54 +48,63 @@ public class TutorsForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        formUsername = new javax.swing.JTextField();
-        formEmail = new javax.swing.JTextField();
+        studentName = new javax.swing.JTextField();
+        studentEmail = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        courseName = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(123, 95, 241));
 
         jLabel10.setFont(new java.awt.Font("Poppins ExtraBold", 0, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/tutors.png"))); // NOI18N
-        jLabel10.setText("Tutors");
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/students.png"))); // NOI18N
+        jLabel10.setText("Student");
 
-        formUsername.setBackground(new java.awt.Color(123, 95, 241));
-        formUsername.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        formUsername.setForeground(new java.awt.Color(255, 255, 255));
-        formUsername.setToolTipText("");
-        formUsername.setBorder(javax.swing.BorderFactory.createTitledBorder(
-                new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Username",
+        studentName.setBackground(new java.awt.Color(123, 95, 241));
+        studentName.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        studentName.setForeground(new java.awt.Color(255, 255, 255));
+        studentName.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Student Name",
                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
                 new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        formUsername.setCaretColor(new java.awt.Color(255, 255, 255));
-        formUsername.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        formUsername.setMinimumSize(new java.awt.Dimension(64, 45));
-        formUsername.setPreferredSize(new java.awt.Dimension(64, 45));
-
-        formEmail.setBackground(new java.awt.Color(123, 95, 241));
-        formEmail.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        formEmail.setForeground(new java.awt.Color(255, 255, 255));
-        formEmail.setToolTipText("");
-        formEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(
-                new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Email",
-                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
-                new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        formEmail.setCaretColor(new java.awt.Color(255, 255, 255));
-        formEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        formEmail.setPreferredSize(new java.awt.Dimension(64, 45));
-        formEmail.addActionListener(new java.awt.event.ActionListener() {
+        studentName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                formEmailActionPerformed(evt);
+                studentNameActionPerformed(evt);
             }
         });
+
+        studentEmail.setBackground(new java.awt.Color(123, 95, 241));
+        studentEmail.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        studentEmail.setForeground(new java.awt.Color(255, 255, 255));
+        studentEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Student Email",
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
+                new java.awt.Font("Poppins Medium", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        studentEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentEmailActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Pick a Course");
+
+        courseName.setBackground(new java.awt.Color(123, 95, 241));
+        courseName.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        courseName.setForeground(new java.awt.Color(255, 255, 255));
+        courseName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one" }));
+        courseName.setPreferredSize(new java.awt.Dimension(72, 45));
 
         jButton1.setBackground(new java.awt.Color(250, 112, 112));
         jButton1.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
@@ -116,15 +131,18 @@ public class TutorsForm extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(formEmail, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(formUsername, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        .addComponent(courseName, javax.swing.GroupLayout.Alignment.TRAILING, 0,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(studentName)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 364,
+                                                Short.MAX_VALUE)
+                                        .addComponent(studentEmail)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel10)
-                                                .addGap(0, 254, Short.MAX_VALUE))
-                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,11 +151,16 @@ public class TutorsForm extends javax.swing.JFrame {
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 31,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(formUsername, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                .addComponent(studentName, javax.swing.GroupLayout.PREFERRED_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(studentEmail, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(formEmail, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(courseName, javax.swing.GroupLayout.PREFERRED_SIZE, 45,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,26 +171,31 @@ public class TutorsForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formEmailActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_formEmailActionPerformed
+    private void studentNameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentNameActionPerformed
         // TODO add your handling code here:
-    }// GEN-LAST:event_formEmailActionPerformed
+    }// GEN-LAST:event_studentNameActionPerformed
+
+    private void studentEmailActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentEmailActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_studentEmailActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
         int id = Integer.parseInt(table.getValueAt(selectedIndex, 0).toString());
-        String username = formUsername.getText();
-        String email = formEmail.getText();
-        table.setValueAt(username, selectedIndex, 1);
-        table.setValueAt(email, selectedIndex, 2);
+        String name = studentName.getText();
+        String email = studentEmail.getText();
+        String course = courseName.getSelectedItem().toString();
         Validation val = new Validation();
-        if (val.validateTutorInputs(id, username, email)) {
+        if (val.validateStudentInputs(id, name, email)) {
             Database db = new Database();
-            db.updateInstructors(id, username, email);
-            this.dispose();
-            JOptionPane.showMessageDialog(null, "Tutor updated successfully");
-            Dashboard.updateTutorsTable();
+            db.updateStudents(id, name, email, course);
+            JOptionPane.showMessageDialog(this, "Student updated successfully");
+            dispose();
+            Dashboard.updateStudentsTable();
+            Dashboard.updateCount();
             // reset the form
-            formUsername.setText("");
-            formEmail.setText("");
+            studentName.setText("");
+            studentEmail.setText("");
+            courseName.setSelectedIndex(0);
         }
     }// GEN-LAST:event_jButton1MouseClicked
 
@@ -196,16 +224,16 @@ public class TutorsForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TutorsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(StudentsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TutorsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(StudentsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TutorsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(StudentsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TutorsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(StudentsForm.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         }
         // </editor-fold>
@@ -213,16 +241,18 @@ public class TutorsForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TutorsForm().setVisible(true);
+                new StudentsForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField formEmail;
-    private javax.swing.JTextField formUsername;
+    private javax.swing.JComboBox<String> courseName;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField studentEmail;
+    private javax.swing.JTextField studentName;
     // End of variables declaration//GEN-END:variables
 }
