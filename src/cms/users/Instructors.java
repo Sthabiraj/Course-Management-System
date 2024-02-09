@@ -1,18 +1,18 @@
 package cms.users;
 
 public class Instructors extends Users {
-  private String instructorID;
+  private int instructorID;
 
-  public Instructors(String username, String email, String password, String instructorID) {
+  public Instructors(int instructorID, String username, String email, String password) {
     super(username, email, password);
     this.instructorID = instructorID;
   }
 
-  public void setInstructorID(String instructorID) {
+  public void setInstructorID(int instructorID) {
     this.instructorID = instructorID;
   }
 
-  public String getInstructorID() {
+  public int getInstructorID() {
     return instructorID;
   }
 
