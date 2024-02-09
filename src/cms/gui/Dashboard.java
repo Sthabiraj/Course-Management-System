@@ -1614,7 +1614,7 @@ public class Dashboard extends javax.swing.JFrame {
         private javax.swing.JLabel coursesBtn;
         private javax.swing.JLabel coursesCount;
         private javax.swing.JPanel coursesTab;
-        private javax.swing.JTable coursesTable;
+        private static javax.swing.JTable coursesTable;
         private javax.swing.JLabel dashboardBtn;
         private javax.swing.JPanel dashboardTab;
         private javax.swing.JButton jButton1;
