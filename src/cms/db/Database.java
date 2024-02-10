@@ -769,4 +769,25 @@ public class Database {
             closeConnection();
         }
     }
+
+    // Method to add marks into the DB
+    public void addMarks(int moduleID, int studentID, int marksObtained, String grade, String eligibility) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO marks (module_id, student_id, marks_obtained, grade, eligibility) VALUES(?, ?, ?, ?, ?)")) {
+                stmt.setInt(1, moduleID);
+                stmt.setInt(2, studentID);
+                stmt.setInt(3, marksObtained);
+                stmt.setString(4, grade);
+                stmt.setString(5, eligibility);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
 }
