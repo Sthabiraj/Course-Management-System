@@ -1034,10 +1034,10 @@
                               <Component id="jButton15" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="jButton14" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel11" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanel11" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="369" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="368" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1310,10 +1310,10 @@
                               <Component id="jButton21" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="jButton20" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel13" alignment="0" pref="34" max="32767" attributes="0"/>
+                          <Component id="jPanel13" alignment="0" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane5" pref="370" max="32767" attributes="0"/>
+                      <Component id="jScrollPane5" pref="369" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1556,10 +1556,10 @@
                               <Component id="jButton18" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="jButton17" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel12" pref="34" max="32767" attributes="0"/>
+                          <Component id="jPanel12" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" pref="370" max="32767" attributes="0"/>
+                      <Component id="jScrollPane4" pref="369" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1666,6 +1666,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton16MouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton16ActionPerformed"/>
               </Events>
             </Component>
@@ -1816,7 +1817,6 @@
                                   </Group>
                                   <Component id="jButton10" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
                                   <Component id="jButton11" alignment="0" min="-2" pref="193" max="-2" attributes="0"/>
-                                  <Component id="jButton12" alignment="0" min="-2" pref="235" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="81" max="32767" attributes="0"/>
                           </Group>
@@ -1856,9 +1856,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButton11" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="jButton12" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -2084,32 +2082,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator9">
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton12">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="f1" green="5f" red="7b" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Poppins Medium" size="14" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/cms/icons/add.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Create a Student Report"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

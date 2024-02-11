@@ -7,6 +7,8 @@ package cms.validation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import cms.db.Database;
 import cms.error.PopupMessage;
 import cms.gui.Dashboard;
@@ -78,7 +80,7 @@ public class Validation {
         }
 
         // Define regex patterns
-        String namePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
+        String usernamePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
         String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // At least 8
                                                                                                       // chars, contains
@@ -137,7 +139,7 @@ public class Validation {
         }
 
         // Define regex patterns
-        String namePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
+        String usernamePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
         String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // At least 8
                                                                                                       // chars, contains
@@ -550,4 +552,19 @@ public class Validation {
         return true;
     }
 
+    // Validation for MarksForm
+    public boolean validateMarksInputs(String studentID, String moduleID, Float marks) {
+        // Checking if moduleID and studentID is not "Select any one"
+        if (moduleID.equals("Select any one") || studentID.equals("Select any one")) {
+            popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        } else {
+            // Validation for marksObtained
+            if (marks < 0 || marks > 100) {
+                popupMessage.showErrorMessage("Invalid marks");
+                return false;
+            }
+        }
+        return true;
+    }
 }
