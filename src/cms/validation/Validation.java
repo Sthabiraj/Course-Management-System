@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import cms.db.Database;
 import cms.error.PopupMessage;
+import cms.gui.Dashboard;
 
 /**
  *
@@ -77,8 +78,7 @@ public class Validation {
         }
 
         // Define regex patterns
-        String usernamePattern = "^[a-zA-Z0-9._-]{3,}$"; // At least 3 characters, allows alphanumeric, dot, underscore,
-                                                         // and hyphen
+        String namePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
         String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // At least 8
                                                                                                       // chars, contains
@@ -137,8 +137,7 @@ public class Validation {
         }
 
         // Define regex patterns
-        String usernamePattern = "^[a-zA-Z0-9._-]{3,}$"; // At least 3 characters, allows alphanumeric, dot, underscore,
-                                                         // and hyphen
+        String namePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
         String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // At least 8
                                                                                                       // chars, contains
@@ -184,6 +183,41 @@ public class Validation {
         matcher = pattern.matcher(mode);
         if (!matcher.matches()) {
             popupMessage.showErrorMessage("Invalid mode");
+            return false;
+        }
+
+        return true;
+    }
+
+    // method to validate name and email
+    public boolean validateNameAndEmail(String name, String email) {
+        // Check if any field is empty
+        if (name.equals("") || email.equals("")) {
+            popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        }
+
+        // Define regex patterns
+        String namePattern = "^[A-Za-z\\s]+$"; // Alphabets and spaces only
+        String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$"; // Basic email pattern
+
+        // Create pattern and matcher objects
+        Pattern pattern;
+        Matcher matcher;
+
+        // Validate name
+        pattern = Pattern.compile(namePattern);
+        matcher = pattern.matcher(name);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid name");
+            return false;
+        }
+
+        // Validate email
+        pattern = Pattern.compile(emailPattern);
+        matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid email");
             return false;
         }
 
@@ -469,4 +503,51 @@ public class Validation {
 
         return true;
     }
+
+    // Method to validate old password and new password
+    public boolean validatePassword(String oldPassword, String newPassword, String password) {
+        // Check if any field is empty
+        if (oldPassword.equals("") || newPassword.equals("")) {
+            popupMessage.showErrorMessage("Input fields cannot be empty!!");
+            return false;
+        }
+
+        // Define regex patterns
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"; // At least 8
+                                                                                                      // chars, contains
+                                                                                                      // at least one
+                                                                                                      // digit, one
+                                                                                                      // lower alpha,
+                                                                                                      // one upper
+                                                                                                      // alpha, one
+                                                                                                      // special symbol,
+                                                                                                      // no whitespace
+
+        // Create pattern and matcher objects
+        Pattern pattern;
+        Matcher matcher;
+
+        // Validate oldPassword
+        if (!oldPassword.equals(password)) {
+            popupMessage.showErrorMessage("Invalid old password");
+            return false;
+        }
+
+        // Validate newPassword
+        pattern = Pattern.compile(passwordPattern);
+        matcher = pattern.matcher(newPassword);
+        if (!matcher.matches()) {
+            popupMessage.showErrorMessage("Invalid new password");
+            return false;
+        }
+
+        // Validate if old and new passwords are same
+        if (oldPassword.equals(newPassword)) {
+            popupMessage.showErrorMessage("Old and new passwords cannot be same");
+            return false;
+        }
+
+        return true;
+    }
+
 }

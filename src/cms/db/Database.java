@@ -790,4 +790,95 @@ public class Database {
             closeConnection();
         }
     }
+
+    // Method to get username and email from the DB
+    public String getUsername(String email, String mode) {
+        try {
+            String username = "";
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT username FROM " + mode.toLowerCase() + " WHERE email = ?")) {
+                stmt.setString(1, email);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        username = rs.getString("username");
+                    }
+                }
+            }
+
+            return username;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return "";
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to get id from the DB
+    public int getID(String email, String mode) {
+        try {
+            int id = 0;
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT id FROM " + mode.toLowerCase() + " WHERE email = ?")) {
+                stmt.setString(1, email);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        id = rs.getInt("id");
+                    }
+                }
+            }
+
+            return id;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return 0;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to update username and email in the DB
+    public void updateUsernameAndEmail(int id, String username, String email, String mode) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("UPDATE " + mode.toLowerCase() + " SET username = ?, email = ? WHERE id = ?")) {
+                stmt.setString(1, username);
+                stmt.setString(2, email);
+                stmt.setInt(3, id);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to update password in the DB
+    public void updatePassword(int id, String password, String mode) {
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("UPDATE " + mode.toLowerCase() + " SET password = ? WHERE id = ?")) {
+                stmt.setString(1, password);
+                stmt.setInt(2, id);
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
 }
