@@ -559,6 +559,12 @@ public class Validation {
             popupMessage.showErrorMessage("Input fields cannot be empty!!");
             return false;
         } else {
+            // Check if marks has already been given
+            Database db = new Database();
+            if (db.checkMarksExistence(Integer.parseInt(studentID), Integer.parseInt(moduleID))) {
+                popupMessage.showErrorMessage("Marks already given to this student for this module");
+                return false;
+            }
             // Validation for marksObtained
             if (marks < 0 || marks > 100) {
                 popupMessage.showErrorMessage("Invalid marks");

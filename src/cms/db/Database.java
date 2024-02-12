@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import cms.courses.Courses;
+import cms.courses.Marks;
 import cms.courses.Modules;
 import cms.users.Instructors;
 import cms.users.Students;
@@ -450,6 +452,89 @@ public class Database {
         return courses;
     }
 
+    // Method to fetch courses with course id as parameter from the database
+    public List<Courses> fetchCoursesFromDatabase(int courseID) {
+        List<Courses> courses = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM courses WHERE id = ?")) {
+                stmt.setInt(1, courseID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        int id = rs.getInt("id");
+                        String name = rs.getString("course_name");
+                        int seats = rs.getInt("seats");
+                        int duration = rs.getInt("duration");
+
+                        // Create a Course object and add it to the list
+                        Courses course = new Courses(id, name, seats, duration);
+                        courses.add(course);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return courses;
+    }
+
+    // Method to get course id with tutor name as parameter
+    public int getCourseId(String tutorName) {
+        try {
+            int courseID = 0;
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT course_id FROM modules WHERE tutor_name = ?")) {
+                stmt.setString(1, tutorName);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        courseID = rs.getInt("course_id");
+                    }
+                }
+            }
+
+            return courseID;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return 0;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to fetch courses with course name as parameter from the database
+    public List<Courses> fetchCoursesFromDatabase(String courseName) {
+        List<Courses> courses = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM courses WHERE course_name = ?")) {
+                stmt.setString(1, courseName);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        int id = rs.getInt("id");
+                        String name = rs.getString("course_name");
+                        int seats = rs.getInt("seats");
+                        int duration = rs.getInt("duration");
+
+                        // Create a Course object and add it to the list
+                        Courses course = new Courses(id, name, seats, duration);
+                        courses.add(course);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return courses;
+    }
+
     // Method to fetch course_name from the database and add it to the combo box
     public void fetchCourseNamesFromDatabase(JComboBox<String> comboBox) {
         try {
@@ -590,6 +675,113 @@ public class Database {
         return modules;
     }
 
+    // Method to fetch modules using tutor name as parameter
+    public List<Modules> fetchModulesFromDatabase(String tutorName) {
+        List<Modules> modules = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM modules WHERE tutor_name = ?")) {
+                stmt.setString(1, tutorName);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String name = rs.getString("module_name");
+                        int courseID = rs.getInt("course_id");
+                        String tutor = rs.getString("tutor_name");
+
+                        // Create a Module object and add it to the list
+                        Modules module = new Modules(id, name, courseID, tutor);
+                        modules.add(module);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return modules;
+    }
+
+    // Method to fetch modules using course id as parameter
+    public List<Modules> fetchModulesFromDatabase(int courseID) {
+        List<Modules> modules = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM modules WHERE course_id = ?")) {
+                stmt.setInt(1, courseID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String name = rs.getString("module_name");
+                        int courseId = rs.getInt("course_id");
+                        String tutor = rs.getString("tutor_name");
+
+                        // Create a Module object and add it to the list
+                        Modules module = new Modules(id, name, courseId, tutor);
+                        modules.add(module);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return modules;
+    }
+
+    // Method to get course name with email and mode as parameters
+    public String getCourse(String email, String mode) {
+        try {
+            String courseName = "";
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement(
+                    "SELECT course FROM " + mode.toLowerCase() + " WHERE email = ?")) {
+                stmt.setString(1, email);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        courseName = rs.getString("course");
+                    }
+                }
+            }
+            return courseName;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return "";
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to get course id with course name as parameter
+    public int getCourseID(String courseName) {
+        try {
+            int courseID = 0;
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT id FROM courses WHERE course_name = ?")) {
+                stmt.setString(1, courseName);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        courseID = rs.getInt("id");
+                    }
+                }
+            }
+
+            return courseID;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return 0;
+        } finally {
+            closeConnection();
+        }
+    }
+
     // Method to check if the module already exists
     public boolean checkModuleExistence(String moduleName) {
         try {
@@ -670,6 +862,62 @@ public class Database {
         return instructors;
     }
 
+    // Method to fetch instructors with course id as parameter from the database
+    public List<Instructors> fetchInstructorsFromDatabase(int courseID) {
+        String tutorName = getTutorName(courseID); // Get tutor name using course id
+        List<Instructors> instructors = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT * FROM instructor WHERE username = ?")) {
+                stmt.setString(1, tutorName);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String username = rs.getString("username");
+                        String email = rs.getString("email");
+                        String password = rs.getString("password");
+
+                        // Create an Instructor object and add it to the list
+                        Instructors instructor = new Instructors(id, username, email, password);
+                        instructors.add(instructor);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return instructors;
+    }
+
+    // Method to get tutor name with course id as parameter
+    public String getTutorName(int courseID) {
+        try {
+            String tutorName = "";
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT tutor_name FROM modules WHERE course_id = ?")) {
+                stmt.setInt(1, courseID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        tutorName = rs.getString("tutor_name");
+                    }
+                }
+            }
+
+            return tutorName;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return "";
+        } finally {
+            closeConnection();
+        }
+    }
+
     // Method to update instructors username and email only in the DB
     public void updateInstructors(int id, String username, String email) {
         try {
@@ -712,6 +960,37 @@ public class Database {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
             try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM student")) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String username = rs.getString("username");
+                        String email = rs.getString("email");
+                        String password = rs.getString("password");
+                        String course = rs.getString("course");
+
+                        // Create a Student object and add it to the list
+                        Students student = new Students(id, username, email, password, course);
+                        students.add(student);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return students;
+    }
+
+    // Method to fetch students from the database with course name as parameter
+    public List<Students> fetchStudentsFromDatabase(String courseName) {
+        List<Students> students = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT * FROM student WHERE course = ?")) {
+                stmt.setString(1, courseName);
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         int id = rs.getInt("id");
@@ -889,6 +1168,33 @@ public class Database {
         }
     }
 
+    // Method to check if the marks already exists
+    public boolean checkMarksExistence(int moduleID, int studentID) {
+        try {
+            boolean marksExists = false;
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT * FROM marks WHERE module_id = ? AND student_id = ?")) {
+                stmt.setInt(1, moduleID);
+                stmt.setInt(2, studentID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        marksExists = true;
+                    }
+                }
+            }
+
+            return marksExists;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            closeConnection();
+        }
+    }
+
     // Method to get username and email from the DB
     public String getUsername(String email, String mode) {
         try {
@@ -975,6 +1281,170 @@ public class Database {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to fetch marks from the database
+    public List<Marks> fetchMarksFromDatabase(int studentID) {
+        List<Marks> marks = new ArrayList<>();
+        try {
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM marks WHERE student_id = ?")) {
+                stmt.setInt(1, studentID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int moduleID = rs.getInt("module_id");
+                        Float markObtained = rs.getFloat("obtained_marks");
+                        String grade = rs.getString("grade");
+                        // Create a Marks object and add it to the list
+                        Marks mark = new Marks(getModuleName(moduleID), markObtained, grade);
+                        marks.add(mark);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Not graded yet", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e);
+        } finally {
+            closeConnection();
+        }
+        return marks;
+    }
+
+    // Method that takes module id and as parameter and returns the module name
+    public String getModuleName(int moduleID) {
+        try {
+            String moduleName = "";
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT module_name FROM modules WHERE id = ?")) {
+                stmt.setInt(1, moduleID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        moduleName = rs.getString("module_name");
+                    }
+                }
+            }
+
+            return moduleName;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return "";
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to check if student id is valid
+    public boolean checkStudentID(int studentID) {
+        try {
+            boolean studentExists = false;
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+
+            try (PreparedStatement stmt = con
+                    .prepareStatement("SELECT * FROM student WHERE id = ?")) {
+                stmt.setInt(1, studentID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        studentExists = true;
+                    }
+                }
+            }
+
+            return studentExists;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to calculate the average grade of a student
+    public String calculateAverageGrade(int studentID) {
+        try {
+            String averageGrade = "";
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            int totalModules = 0;
+            int totalMarks = 0;
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM marks WHERE student_id = ?")) {
+                stmt.setInt(1, studentID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        totalModules++;
+                        totalMarks += rs.getFloat("obtained_marks");
+                    }
+                }
+            }
+
+            if (totalModules != 0) {
+                float averageMarks = totalMarks / totalModules;
+                if (averageMarks >= 90) {
+                    averageGrade = "A+";
+                } else if (averageMarks >= 80) {
+                    averageGrade = "A";
+                } else if (averageMarks >= 70) {
+                    averageGrade = "B";
+                } else if (averageMarks >= 60) {
+                    averageGrade = "C";
+                } else if (averageMarks >= 50) {
+                    averageGrade = "D";
+                } else {
+                    averageGrade = "F";
+                }
+            } else {
+                averageGrade = "N/A";
+            }
+
+            return averageGrade;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return "";
+        } finally {
+            closeConnection();
+        }
+    }
+
+    // Method to calculate the eligibility of a student
+    public String calculateEligibility(int studentID) {
+        try {
+            String eligibility = "";
+            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+            int totalModules = 0;
+            int totalMarks = 0;
+            try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM marks WHERE student_id = ?")) {
+                stmt.setInt(1, studentID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        totalModules++;
+                        totalMarks += rs.getFloat("obtained_marks");
+                    }
+                }
+            }
+
+            if (totalModules != 0) {
+                float averageMarks = totalMarks / totalModules;
+                if (averageMarks >= 40) {
+                    eligibility = "Eligible to go to next semester";
+                } else {
+                    eligibility = "Not eligible to go to next semester";
+                }
+            } else {
+                eligibility = "N/A";
+            }
+
+            return eligibility;
+        } catch (SQLException e) {
+            System.out.println(e);
+            return "";
         } finally {
             closeConnection();
         }

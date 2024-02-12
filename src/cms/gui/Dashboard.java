@@ -21,17 +21,18 @@ import javax.swing.table.TableRowSorter;
 
 public class Dashboard extends javax.swing.JFrame {
     private int id;
-    private String username;
+    private static String username;
     private String email;
     private String password;
-    private String mode;
+    private static String mode;
+    private static String course;
 
     public void setId(int id) {
         this.id = id;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        Dashboard.username = username;
     }
 
     public void setEmail(String email) {
@@ -43,7 +44,11 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     public void setMode(String mode) {
-        this.mode = mode;
+        Dashboard.mode = mode;
+    }
+
+    public void setCourse(String course) {
+        Dashboard.course = course;
     }
 
     public int getId() {
@@ -64,6 +69,10 @@ public class Dashboard extends javax.swing.JFrame {
 
     public String getMode() {
         return mode;
+    }
+
+    public String getCourse() {
+        return course;
     }
 
     public static void updateCount() {
@@ -89,70 +98,102 @@ public class Dashboard extends javax.swing.JFrame {
         // Fetch courses from the database
         Database db = new Database();
         coursesTable.repaint();
-        List<Courses> courses = db.fetchCoursesFromDatabase();
+
+        List<Courses> courses = null;
+        if (mode.equals("Admin")) {
+            courses = db.fetchCoursesFromDatabase();
+        } else if (mode.equals("Instructor")) {
+            courses = db.fetchCoursesFromDatabase(db.getCourseId(username));
+        } else if (mode.equals("Student")) {
+            courses = db.fetchCoursesFromDatabase(course);
+        }
 
         // Clear the existing table data
         DefaultTableModel tblModel = (DefaultTableModel) coursesTable.getModel();
         tblModel.setRowCount(0);
 
         // Populate the table with course information
-        for (Courses course : courses) {
-            String data[] = { String.valueOf(course.getCourseID()),
-                    course.getCourseName(),
-                    String.valueOf(course.getSeats()),
-                    String.valueOf(course.getDuration()) };
-            tblModel.addRow(data);
+        if (courses != null) {
+            for (Courses course : courses) {
+                String data[] = { String.valueOf(course.getCourseID()),
+                        course.getCourseName(),
+                        String.valueOf(course.getSeats()),
+                        String.valueOf(course.getDuration()) };
+                tblModel.addRow(data);
+            }
         }
     }
 
     public static void updateModulesTable() {
         Database db = new Database();
         modulesTable.repaint();
-        List<Modules> modules = db.fetchModulesFromDatabase();
+        List<Modules> modules = null;
+
+        if (mode.equals("Admin")) {
+            modules = db.fetchModulesFromDatabase();
+        } else if (mode.equals("Instructor")) {
+            modules = db.fetchModulesFromDatabase(username);
+        } else if (mode.equals("Student")) {
+            modules = db.fetchModulesFromDatabase(db.getCourseID(course));
+        }
 
         DefaultTableModel tblModel = (DefaultTableModel) modulesTable.getModel();
         tblModel.setRowCount(0);
 
-        for (Modules module : modules) {
-            String data[] = { String.valueOf(module.getModuleID()), module.getModuleName(),
-                    String.valueOf(module.getCourseID()), module.getTutorName() };
-            tblModel.addRow(data);
+        if (modules != null) {
+            for (Modules module : modules) {
+                String data[] = { String.valueOf(module.getModuleID()), module.getModuleName(),
+                        String.valueOf(module.getCourseID()), module.getTutorName() };
+                tblModel.addRow(data);
+            }
         }
+
     }
 
     public static void updateTutorsTable() {
         Database db = new Database();
         tutorsTable.repaint();
-        List<Instructors> tutors = db.fetchInstructorsFromDatabase();
+
+        List<Instructors> tutors = null;
+        if (mode.equals("Admin")) {
+            tutors = db.fetchInstructorsFromDatabase();
+        } else if (mode.equals("Student")) {
+            tutors = db.fetchInstructorsFromDatabase(db.getCourseID(course));
+        }
 
         DefaultTableModel tblModel = (DefaultTableModel) tutorsTable.getModel();
         tblModel.setRowCount(0);
 
-        for (Instructors tutor : tutors) {
-            String data[] = { String.valueOf(tutor.getInstructorID()), tutor.getUsername(),
-                    tutor.getEmail() };
-            tblModel.addRow(data);
+        if (tutors != null) {
+            for (Instructors tutor : tutors) {
+                String data[] = { String.valueOf(tutor.getInstructorID()), tutor.getUsername(),
+                        tutor.getEmail() };
+                tblModel.addRow(data);
+            }
         }
     }
 
     public static void updateStudentsTable() {
         Database db = new Database();
         studentsTable.repaint();
-        List<Students> students = db.fetchStudentsFromDatabase();
+
+        List<Students> students = null;
+        if (mode.equals("Admin")) {
+            students = db.fetchStudentsFromDatabase();
+        } else if (mode.equals("Instructor")) {
+            students = db.fetchStudentsFromDatabase(db.getCourseName(db.getCourseId(username)));
+        }
 
         DefaultTableModel tblModel = (DefaultTableModel) studentsTable.getModel();
         tblModel.setRowCount(0);
 
-        for (Students student : students) {
-            String data[] = { String.valueOf(student.getStudentID()), student.getUsername(),
-                    student.getEmail(), student.getCourse() };
-            tblModel.addRow(data);
+        if (students != null) {
+            for (Students student : students) {
+                String data[] = { String.valueOf(student.getStudentID()), student.getUsername(),
+                        student.getEmail(), student.getCourse() };
+                tblModel.addRow(data);
+            }
         }
-    }
-
-    // Method to update profile
-    public void updateProfile() {
-
     }
 
     /**
@@ -177,7 +218,7 @@ public class Dashboard extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.email = email;
         this.password = password;
-        this.mode = mode;
+        Dashboard.mode = mode;
         dashboardBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
         tabs.setSelectedIndex(0);
         Database db = new Database();
@@ -186,11 +227,7 @@ public class Dashboard extends javax.swing.JFrame {
         setUsername(db.getUsername(getEmail(), getMode()));
         profileUsername.setText(getUsername());
         profileEmail.setText(getEmail());
-        updateCount();
-        updateCoursesTable();
-        updateModulesTable();
-        updateTutorsTable();
-        updateStudentsTable();
+
         if (mode.equals("Instructor")) {
             // dashboard section
             jPanel2.remove(tutorsBtn);
@@ -216,6 +253,7 @@ public class Dashboard extends javax.swing.JFrame {
             jButton16.setText("Marks");
             jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/add.png")));
         } else if (mode.equals("Student")) {
+            setCourse(db.getCourse(getEmail(), getMode()));
             // dashboard section
             jPanel2.remove(studentsBtn);
             jPanel2.revalidate();
@@ -229,15 +267,22 @@ public class Dashboard extends javax.swing.JFrame {
             // modules section
             modulesTab.remove(jButton13);
             modulesTab.remove(jButton14);
-            modulesTab.remove(jButton15);
             modulesTab.revalidate();
             modulesTab.repaint();
+            jButton15.setText("Marks");
+            jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/marks.png")));
             // tutors section
             tutorsTab.remove(jButton20);
             tutorsTab.remove(jButton21);
             tutorsTab.revalidate();
             tutorsTab.repaint();
         }
+
+        updateCount();
+        updateCoursesTable();
+        updateModulesTable();
+        updateTutorsTable();
+        updateStudentsTable();
     }
 
     /**
@@ -1647,7 +1692,10 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton16MouseClicked
-        if (mode.equals("Instructor")) {
+        if (mode.equals("Admin")) {
+            MarksReport mr = new MarksReport();
+            mr.setVisible(true);
+        } else if (mode.equals("Instructor")) {
             MarksForm mf = new MarksForm(getUsername());
             mf.setVisible(true);
         }
@@ -1752,26 +1800,32 @@ public class Dashboard extends javax.swing.JFrame {
     }// GEN-LAST:event_jTextField6KeyReleased
 
     private void jButton15MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton15MouseClicked
-        int selectedIndex = modulesTable.getSelectedRow();
-        if (selectedIndex == -1) {
-            if (coursesTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Table is empty");
+        if (mode.equals("Admin")) {
+            int selectedIndex = modulesTable.getSelectedRow();
+            if (selectedIndex == -1) {
+                if (coursesTable.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(this, "Table is empty");
+                } else {
+                    JOptionPane.showMessageDialog(this, "You must select a module");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "You must select a module");
+                int id = Integer.parseInt((String) modulesTable.getValueAt(selectedIndex, 0));
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to delete this module?",
+                        "Warning",
+                        JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    Database db = new Database();
+                    db.deleteModule(id);
+                    JOptionPane.showMessageDialog(this, "Module deleted successfully");
+                    updateModulesTable();
+                    updateCount();
+                }
             }
-        } else {
-            int id = Integer.parseInt((String) modulesTable.getValueAt(selectedIndex, 0));
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to delete this module?",
-                    "Warning",
-                    JOptionPane.YES_NO_OPTION);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                Database db = new Database();
-                db.deleteModule(id);
-                JOptionPane.showMessageDialog(this, "Module deleted successfully");
-                updateModulesTable();
-                updateCount();
-            }
+        } else if (mode.equals("Student")) {
+            MarksReport mr = new MarksReport(getId());
+            mr.setVisible(true);
         }
+
     }// GEN-LAST:event_jButton15MouseClicked
 
     private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton14MouseClicked
