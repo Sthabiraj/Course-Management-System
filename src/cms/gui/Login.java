@@ -4,6 +4,8 @@
  */
 package cms.gui;
 
+import javax.swing.JOptionPane;
+
 import cms.db.Database;
 import cms.error.PopupMessage;
 import cms.validation.Validation;
@@ -213,7 +215,7 @@ public class Login extends javax.swing.JFrame {
         Database db = new Database();
         if (val.validateLogin(email, password, mode)) {
             if (db.login(email, password, mode)) {
-                pop.showErrorMessage("Account Logedin Sucessfully", "");
+                JOptionPane.showMessageDialog(this, "Logged in successfully");
                 db.addActivity(email, mode, "logged in");
                 Dashboard dash = new Dashboard(email, password, mode);
                 dash.setVisible(true);

@@ -132,6 +132,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studentIDActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="studentIDKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="generateBtn">
@@ -255,7 +256,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="A"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="eligibility">
@@ -266,7 +266,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Eligible to go to next semester"/>
           </Properties>
         </Component>
       </SubComponents>

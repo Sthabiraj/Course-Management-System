@@ -1,18 +1,18 @@
 package cms.courses;
 
 public class Marks {
-  private String courseName;
+  private String moduleName;
   private float marks;
   private String grade;
 
-  public Marks(String courseName, float marks, String grade) {
-    this.courseName = courseName;
+  public Marks(String moduleName, float marks, String grade) {
+    this.moduleName = moduleName;
     this.marks = marks;
     this.grade = grade;
   }
 
-  public String getCourseName() {
-    return courseName;
+  public String getModuleName() {
+    return moduleName;
   }
 
   public float getMarks() {
@@ -23,8 +23,8 @@ public class Marks {
     return grade;
   }
 
-  public void setCourseName(String courseName) {
-    this.courseName = courseName;
+  public void setModuleName(String moduleName) {
+    this.moduleName = moduleName;
   }
 
   public void setMarks(float marks) {

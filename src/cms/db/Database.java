@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -864,55 +866,56 @@ public class Database {
 
     // Method to fetch instructors with course id as parameter from the database
     public List<Instructors> fetchInstructorsFromDatabase(int courseID) {
-        String tutorName = getTutorName(courseID); // Get tutor name using course id
+        String tutorName[] = getTutorNames(courseID); // Get tutor name using course id
         List<Instructors> instructors = new ArrayList<>();
-        try {
-            dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
-            con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
-            try (PreparedStatement stmt = con
-                    .prepareStatement("SELECT * FROM instructor WHERE username = ?")) {
-                stmt.setString(1, tutorName);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        int id = rs.getInt("id");
-                        String username = rs.getString("username");
-                        String email = rs.getString("email");
-                        String password = rs.getString("password");
+        for (String tutor : tutorName) {
+            System.out.println(tutor);
+            try {
+                dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
+                con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
+                try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM instructor WHERE username = ?")) {
+                    stmt.setString(1, tutor);
+                    try (ResultSet rs = stmt.executeQuery()) {
+                        while (rs.next()) {
+                            int id = rs.getInt("id");
+                            String username = rs.getString("username");
+                            String email = rs.getString("email");
+                            String password = rs.getString("password");
 
-                        // Create an Instructor object and add it to the list
-                        Instructors instructor = new Instructors(id, username, email, password);
-                        instructors.add(instructor);
+                            // Create an Instructor object and add it to the list
+                            Instructors instructor = new Instructors(id, username, email, password);
+                            instructors.add(instructor);
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                System.out.println(e);
+            } finally {
+                closeConnection();
             }
-        } catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            closeConnection();
         }
         return instructors;
     }
 
-    // Method to get tutor name with course id as parameter
-    public String getTutorName(int courseID) {
+    // Method to get all tutor names with course id as parameter
+    public String[] getTutorNames(int courseID) {
         try {
-            String tutorName = "";
+            Set<String> tutorNameSet = new LinkedHashSet<>();
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
-            try (PreparedStatement stmt = con
-                    .prepareStatement("SELECT tutor_name FROM modules WHERE course_id = ?")) {
+            try (PreparedStatement stmt = con.prepareStatement("SELECT tutor_name FROM modules WHERE course_id = ?")) {
                 stmt.setInt(1, courseID);
                 try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        tutorName = rs.getString("tutor_name");
+                    while (rs.next()) {
+                        tutorNameSet.add(rs.getString("tutor_name"));
                     }
                 }
             }
-
-            return tutorName;
+            String[] tutorNames = tutorNameSet.toArray(new String[0]);
+            return tutorNames;
         } catch (SQLException e) {
             System.out.println(e);
-            return "";
+            return null;
         } finally {
             closeConnection();
         }

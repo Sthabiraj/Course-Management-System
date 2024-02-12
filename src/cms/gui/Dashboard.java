@@ -89,6 +89,13 @@ public class Dashboard extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(textFieldName.getText().trim()));
     }
 
+    public void tableFilter(JTable tableName, String filter) {
+        DefaultTableModel model = (DefaultTableModel) tableName.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        tableName.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(filter));
+    }
+
     /**
      * Updates the courses table in the dashboard GUI.
      * Retrieves the courses from the database and populates the table with the
@@ -233,6 +240,7 @@ public class Dashboard extends javax.swing.JFrame {
             jPanel2.remove(tutorsBtn);
             jPanel2.revalidate();
             jPanel2.repaint();
+            tableFilter(activitiesTable, mode + ": " + getEmail()); // filter activities table
             // courses section
             coursesTab.remove(jButton1);
             coursesTab.remove(jButton2);
@@ -258,6 +266,7 @@ public class Dashboard extends javax.swing.JFrame {
             jPanel2.remove(studentsBtn);
             jPanel2.revalidate();
             jPanel2.repaint();
+            tableFilter(activitiesTable, mode + ": " + getEmail()); // filter activities table
             // courses section
             coursesTab.remove(jButton1);
             coursesTab.remove(jButton2);
@@ -322,6 +331,7 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -329,7 +339,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
+        logoutBtn = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         dashboardBtn = new javax.swing.JLabel();
@@ -450,16 +460,27 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel4.setOpaque(false);
         jPanel4.setPreferredSize(new java.awt.Dimension(220, 100));
 
-        jLabel24.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/logout.png"))); // NOI18N
-        jLabel24.setText("Logout");
-        jLabel24.setToolTipText("");
-        jLabel24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel24.setIconTextGap(7);
-        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+        logoutBtn.setFont(new java.awt.Font("Poppins Medium", 0, 16)); // NOI18N
+        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/logout.png"))); // NOI18N
+        logoutBtn.setText("Logout");
+        logoutBtn.setToolTipText("");
+        logoutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutBtn.setIconTextGap(7);
+        logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel24MouseClicked(evt);
+                logoutBtnMouseClicked(evt);
+            }
+
+            private void logoutBtnMouseClicked(MouseEvent evt) {
+                // when the logout button is clicked a confirmation dialog is shown
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Warning",
+                        JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    // if the user confirms the logout, the login page is shown
+                    dispose();
+                    new Login().setVisible(true);
+                }
             }
         });
 
@@ -469,11 +490,11 @@ public class Dashboard extends javax.swing.JFrame {
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                 .addGap(0, 50, Short.MAX_VALUE)
-                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 170,
+                                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)));
         jPanel4Layout.setVerticalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE));
+                        .addComponent(logoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE));
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
@@ -2135,7 +2156,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2173,6 +2193,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel logoutBtn;
     private javax.swing.JLabel modulesBtn;
     private javax.swing.JPanel modulesTab;
     private static javax.swing.JTable modulesTable;
