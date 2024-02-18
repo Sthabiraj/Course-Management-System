@@ -1,25 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cms.validation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
 import cms.db.Database;
 import cms.error.PopupMessage;
-import cms.gui.Dashboard;
 
-/**
- *
- * @author biraj
- */
 public class Validation {
     PopupMessage popupMessage = new PopupMessage();
 
+    /**
+     * Validates the login credentials.
+     * 
+     * @param email    the email address entered by the user
+     * @param password the password entered by the user
+     * @param mode     the mode selected by the user
+     * @return true if the login credentials are valid, false otherwise
+     */
     public boolean validateLogin(String email, String password, String mode) {
         // Check if any field is empty
         if (email.equals("") || password.equals("") || mode.equals("Select any one")) {
@@ -71,6 +68,16 @@ public class Validation {
         return true;
     }
 
+    /**
+     * Validates the inputs for username, email, password, mode, and course.
+     * 
+     * @param username the username to be validated
+     * @param email the email to be validated
+     * @param password the password to be validated
+     * @param mode the mode to be validated
+     * @param course the course to be validated
+     * @return true if all inputs are valid, false otherwise
+     */
     public boolean validateInputs(String username, String email, String password, String mode, String course) {
         // Check if any field is empty
         if (username.equals("") || email.equals("") || password.equals("") || mode.equals("Select any one")
@@ -131,6 +138,15 @@ public class Validation {
         return true;
     }
 
+    /**
+     * Validates the inputs for username, email, password, and mode.
+     * 
+     * @param username The username to be validated.
+     * @param email The email to be validated.
+     * @param password The password to be validated.
+     * @param mode The mode to be validated.
+     * @return true if all inputs are valid, false otherwise.
+     */
     public boolean validateInputs(String username, String email, String password, String mode) {
         // Check if any field is empty
         if (username.equals("") || email.equals("") || password.equals("") || mode.equals("Select any one")) {
@@ -192,6 +208,13 @@ public class Validation {
     }
 
     // method to validate name and email
+    /**
+     * Validates the name and email fields.
+     * 
+     * @param name  the name to be validated
+     * @param email the email to be validated
+     * @return true if the name and email are valid, false otherwise
+     */
     public boolean validateNameAndEmail(String name, String email) {
         // Check if any field is empty
         if (name.equals("") || email.equals("")) {
@@ -227,6 +250,14 @@ public class Validation {
     }
 
     // method to validate course inputs
+    /**
+     * Validates the inputs for a course.
+     * 
+     * @param courseName The name of the course.
+     * @param seats The number of seats available for the course.
+     * @param duration The duration of the course.
+     * @return true if the inputs are valid, false otherwise.
+     */
     public boolean validateCourseInputs(String courseName, int seats, int duration) {
         // Check if any field is empty
         if (courseName.equals("") || seats == 0) {
@@ -276,6 +307,15 @@ public class Validation {
         return true;
     }
 
+    /**
+     * Validates the inputs for a course.
+     * 
+     * @param id          the ID of the course
+     * @param courseName  the name of the course
+     * @param seats       the number of seats available for the course
+     * @param duration    the duration of the course
+     * @return true if the inputs are valid, false otherwise
+     */
     public boolean validateCourseInputs(int id, String courseName, int seats, int duration) {
         // Check if any field is empty
         if (courseName.equals("") || seats == 0) {
@@ -326,6 +366,14 @@ public class Validation {
     }
 
     // method to validate module inputs
+    /**
+     * Validates the inputs for a module.
+     * 
+     * @param moduleName The name of the module.
+     * @param courseID The ID of the course.
+     * @param tutorName The name of the tutor.
+     * @return True if the inputs are valid, false otherwise.
+     */
     public boolean validateModuleInputs(String moduleName, String courseID, String tutorName) {
         // Check if any field is empty
         if (moduleName.equals("") || courseID.equals("Select any one") || tutorName.equals("Select any one")) {
@@ -375,6 +423,15 @@ public class Validation {
         return true;
     }
 
+    /**
+     * Validates the inputs for a module.
+     * 
+     * @param id          the ID of the module
+     * @param moduleName the name of the module
+     * @param courseID    the ID of the course
+     * @param tutorName   the name of the tutor
+     * @return true if the inputs are valid, false otherwise
+     */
     public boolean validateModuleInputs(int id, String moduleName, String courseID, String tutorName) {
         // Check if any field is empty
         if (moduleName.equals("") || courseID.equals("Select any one") || tutorName.equals("Select any one")) {
@@ -425,6 +482,14 @@ public class Validation {
     }
 
     // method to validate tutor inputs
+    /**
+     * Validates the inputs for a tutor.
+     * 
+     * @param id The ID of the tutor.
+     * @param tutorName The name of the tutor.
+     * @param email The email of the tutor.
+     * @return true if the inputs are valid, false otherwise.
+     */
     public boolean validateTutorInputs(int id, String tutorName, String email) {
         // Check if any field is empty
         if (tutorName.equals("") || email.equals("")) {
@@ -466,6 +531,14 @@ public class Validation {
     }
 
     // Method to validate student inputs
+    /**
+     * Validates the inputs for a student.
+     * 
+     * @param id The ID of the student.
+     * @param studentName The name of the student.
+     * @param email The email of the student.
+     * @return true if the inputs are valid, false otherwise.
+     */
     public boolean validateStudentInputs(int id, String studentName, String email) {
         // Check if any field is empty
         if (studentName.equals("") || email.equals("")) {
@@ -507,6 +580,15 @@ public class Validation {
     }
 
     // Method to validate old password and new password
+    /**
+     * Validates the password by checking if the old password is correct, if the new password meets the required criteria,
+     * and if the old and new passwords are different.
+     *
+     * @param oldPassword The old password entered by the user.
+     * @param newPassword The new password entered by the user.
+     * @param password The correct password for comparison.
+     * @return true if the password is valid, false otherwise.
+     */
     public boolean validatePassword(String oldPassword, String newPassword, String password) {
         // Check if any field is empty
         if (oldPassword.equals("") || newPassword.equals("")) {
@@ -553,6 +635,14 @@ public class Validation {
     }
 
     // Validation for MarksForm
+    /**
+     * Validates the inputs for marks submission.
+     * 
+     * @param studentID The ID of the student.
+     * @param moduleID The ID of the module.
+     * @param marks The marks obtained by the student.
+     * @return true if the inputs are valid, false otherwise.
+     */
     public boolean validateMarksInputs(String studentID, String moduleID, Float marks) {
         // Checking if moduleID and studentID is not "Select any one"
         if (moduleID.equals("Select any one") || studentID.equals("Select any one")) {

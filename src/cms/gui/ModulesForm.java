@@ -35,6 +35,15 @@ public class ModulesForm extends javax.swing.JFrame {
         db.fetchInstructorNamesFromDatabase(assignTutor);
     }
 
+    /**
+     * Represents a form for managing modules in the Course Management System.
+     * This form allows the user to update module information.
+     *
+     * @param isEditMode    a boolean indicating whether the form is in edit mode or
+     *                      not
+     * @param table         the JTable component used to display module information
+     * @param selectedIndex the index of the selected module in the table
+     */
     public ModulesForm(boolean isEditMode, JTable table, int selectedIndex) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -198,6 +207,15 @@ public class ModulesForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles the mouse click event for jButton1.
+     * If isEditMode is true, updates an existing module with the values entered in
+     * the form.
+     * If isEditMode is false, adds a new module with the values entered in the
+     * form.
+     * 
+     * @param evt The mouse event triggered by the button click.
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
         if (isEditMode) {
             // Update existing module

@@ -26,6 +26,14 @@ public class TutorsForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     * Represents a form for managing tutors in the Course Management System.
+     * This form is used to display and edit tutor information.
+     *
+     * @param table         The JTable component used to display the tutor
+     *                      information.
+     * @param selectedIndex The index of the selected tutor in the table.
+     */
     public TutorsForm(JTable table, int selectedIndex) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -152,6 +160,15 @@ public class TutorsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_formEmailActionPerformed
 
+    /**
+     * Event handler for the mouse click event on jButton1.
+     * Retrieves the selected row index from the table and updates the corresponding
+     * tutor's username and email.
+     * Validates the tutor inputs and updates the database if the inputs are valid.
+     * Disposes the current form, displays a success message, and updates the tutors
+     * table in the dashboard.
+     * Resets the form by clearing the username and email fields.
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
         int id = Integer.parseInt(table.getValueAt(selectedIndex, 0).toString());
         String username = formUsername.getText();

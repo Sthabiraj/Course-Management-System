@@ -22,14 +22,20 @@ import cms.users.Instructors;
 import cms.users.Students;
 import cms.users.Users;
 
+/**
+ * The Database class represents a database connection and provides methods for
+ * creating tables, adding values, checking user existence, and more.
+ */
 public class Database {
     private Connection con;
 
     DatabaseInfo dbInfo = new DatabaseInfo("jdbc:mysql://localhost:3306/", "root", "", "cms");
 
+    /**
+     * Creates the database.
+     */
     public void createDatabase() {
         try {
-            // dbInfo.setDbName(databaseName);
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
             System.out.println("Connection Established!");
             try (PreparedStatement stmt = con.prepareStatement("CREATE DATABASE " + dbInfo.getDbName())) {
@@ -42,6 +48,11 @@ public class Database {
         }
     }
 
+    /**
+     * Creates a table in the database.
+     * 
+     * @param tableName the name of the table to create
+     */
     public void createTable(String tableName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -59,6 +70,12 @@ public class Database {
         }
     }
 
+    /**
+     * Creates a table in the database with an additional column.
+     * 
+     * @param tableName the name of the table to create
+     * @param column    the name of the additional column
+     */
     public void createTable(String tableName, String column) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -77,9 +94,16 @@ public class Database {
         }
     }
 
+    /**
+     * Adds values to the specified table.
+     * 
+     * @param username the username value
+     * @param email    the email value
+     * @param password the password value
+     * @param mode     the mode value
+     */
     public void addValues(String username, String email, String password, String mode) {
         try {
-            System.out.println(dbInfo.getDbName());
             Users user = new Users(username, email, password);
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
@@ -99,9 +123,17 @@ public class Database {
         }
     }
 
+    /**
+     * Adds values to the specified table with an additional column.
+     * 
+     * @param username the username value
+     * @param email    the email value
+     * @param password the password value
+     * @param mode     the mode value
+     * @param course   the course value
+     */
     public void addValues(String username, String email, String password, String mode, String course) {
         try {
-            System.out.println(dbInfo.getDbName());
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
             Students student = new Students(username, email, password, course);
             con = DriverManager.getConnection(dbInfo.getDbUrl(), dbInfo.getDbUsername(), dbInfo.getDbPassword());
@@ -122,7 +154,13 @@ public class Database {
         }
     }
 
-    // Method to check if the user exists
+    /**
+     * Checks if a user exists in the specified table.
+     * 
+     * @param email the email value
+     * @param mode  the mode value
+     * @return true if the user exists, false otherwise
+     */
     public boolean checkUserExistence(String email, String mode) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -145,6 +183,14 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if a user exists in the specified table, excluding the specified ID.
+     * 
+     * @param id    the ID value to exclude
+     * @param email the email value
+     * @param mode  the mode value
+     * @return true if the user exists, false otherwise
+     */
     public boolean checkUserExistence(int id, String email, String mode) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -171,8 +217,15 @@ public class Database {
         }
     }
 
-    // Method for login that takes email, password, and mode as parameters and looks
-    // into the database to check if the user exists
+    /**
+     * Checks if a user can login with the specified email and password in the
+     * specified table.
+     * 
+     * @param email    the email value
+     * @param password the password value
+     * @param mode     the mode value
+     * @return true if the user can login, false otherwise
+     */
     public boolean login(String email, String password, String mode) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -196,6 +249,9 @@ public class Database {
         }
     }
 
+    /**
+     * Closes the database connection.
+     */
     private void closeConnection() {
         try {
             if (con != null) {
@@ -206,7 +262,12 @@ public class Database {
         }
     }
 
-    // Method to check if the database exists
+    /**
+     * Checks if the specified database exists.
+     * 
+     * @param databaseName the name of the database
+     * @return true if the database exists, false otherwise
+     */
     public boolean checkDatabaseExistence(String databaseName) {
         try {
             dbInfo.setDbName(databaseName);
@@ -233,7 +294,12 @@ public class Database {
         }
     }
 
-    // Method to check if the table exists
+    /**
+     * Checks if the specified table exists.
+     * 
+     * @param tableName the name of the table
+     * @return true if the table exists, false otherwise
+     */
     public boolean checkTableExistence(String tableName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -259,7 +325,14 @@ public class Database {
         }
     }
 
-    // Method to add activities into the DB
+    /**
+     * Adds an activity to the database.
+     * 
+     * @param email        the email of the user performing the activity
+     * @param mode         the mode of the activity (e.g., "Admin", "Instructor",
+     *                     "Student")
+     * @param activityName the name of the activity
+     */
     public void addActivity(String email, String mode, String activityName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -278,6 +351,11 @@ public class Database {
     }
 
     // Method to get activities from the DB
+    /**
+     * Retrieves activities from the database and populates them into a JTable.
+     * 
+     * @param tableVar the JTable to populate with activities
+     */
     public void getActivities(JTable tableVar) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -299,6 +377,12 @@ public class Database {
     }
 
     // Method to get length of any table
+    /**
+     * Retrieves the number of rows in the specified table.
+     * 
+     * @param tableName the name of the table
+     * @return the number of rows in the table, or 0 if an error occurs
+     */
     public int getLength(String tableName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -320,6 +404,13 @@ public class Database {
     }
 
     // Method to add courses into the DB
+    /**
+     * Adds a new course to the database.
+     * 
+     * @param courseName the name of the course
+     * @param seats      the number of available seats for the course
+     * @param duration   the duration of the course in weeks
+     */
     public void addCourses(String courseName, int seats, int duration) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -339,6 +430,14 @@ public class Database {
     }
 
     // Method to update courses in the DB
+    /**
+     * Updates the information of a course in the database.
+     * 
+     * @param id         the ID of the course to be updated
+     * @param courseName the new name of the course
+     * @param seats      the new number of seats available for the course
+     * @param duration   the new duration of the course
+     */
     public void updateCourses(int id, String courseName, int seats, int duration) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -359,6 +458,11 @@ public class Database {
     }
 
     // Method to delete courses from the DB
+    /**
+     * Deletes a course from the database based on the provided ID.
+     * 
+     * @param id the ID of the course to be deleted
+     */
     public void deleteCourse(int id) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -375,6 +479,12 @@ public class Database {
     }
 
     // Method to check if the course exists
+    /**
+     * Checks if a course exists in the database.
+     * 
+     * @param courseName the name of the course to check
+     * @return true if the course exists, false otherwise
+     */
     public boolean checkCourseExistence(String courseName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -400,6 +510,14 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if a course with the given ID and course name exists in the database.
+     * 
+     * @param id         the ID of the course to check
+     * @param courseName the name of the course to check
+     * @return true if a course with the given ID and course name exists, false
+     *         otherwise
+     */
     public boolean checkCourseExistence(int id, String courseName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -427,6 +545,11 @@ public class Database {
     }
 
     // Method to fetch courses from the database
+    /**
+     * Fetches the courses from the database.
+     * 
+     * @return a list of Courses objects retrieved from the database
+     */
     public List<Courses> fetchCoursesFromDatabase() {
         List<Courses> courses = new ArrayList<>();
         try {
@@ -455,6 +578,12 @@ public class Database {
     }
 
     // Method to fetch courses with course id as parameter from the database
+    /**
+     * Fetches courses from the database based on the given course ID.
+     * 
+     * @param courseID the ID of the course to fetch
+     * @return a list of Courses objects matching the given course ID
+     */
     public List<Courses> fetchCoursesFromDatabase(int courseID) {
         List<Courses> courses = new ArrayList<>();
         try {
@@ -484,6 +613,13 @@ public class Database {
     }
 
     // Method to get course id with tutor name as parameter
+    /**
+     * Retrieves the course ID associated with a given tutor name from the database.
+     * 
+     * @param tutorName the name of the tutor
+     * @return the course ID associated with the tutor name, or 0 if not found or an
+     *         error occurs
+     */
     public int getCourseId(String tutorName) {
         try {
             int courseID = 0;
@@ -509,6 +645,12 @@ public class Database {
     }
 
     // Method to fetch courses with course name as parameter from the database
+    /**
+     * Fetches courses from the database based on the given course name.
+     * 
+     * @param courseName the name of the course to fetch
+     * @return a list of Courses objects matching the given course name
+     */
     public List<Courses> fetchCoursesFromDatabase(String courseName) {
         List<Courses> courses = new ArrayList<>();
         try {
@@ -538,6 +680,11 @@ public class Database {
     }
 
     // Method to fetch course_name from the database and add it to the combo box
+    /**
+     * Fetches course names from the database and populates them into a JComboBox.
+     * 
+     * @param comboBox the JComboBox to populate with course names
+     */
     public void fetchCourseNamesFromDatabase(JComboBox<String> comboBox) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -557,6 +704,11 @@ public class Database {
     }
 
     // Method to fetch course_id from the database and add it to the combo box
+    /**
+     * Fetches course IDs from the database and populates them into a JComboBox.
+     * 
+     * @param comboBox the JComboBox to populate with course IDs
+     */
     public void fetchCourseIDsFromDatabase(JComboBox<String> comboBox) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -576,6 +728,12 @@ public class Database {
     }
 
     // Method to fetch username of instructor from the database
+    /**
+     * Fetches instructor names from the database and populates them into a
+     * JComboBox.
+     * 
+     * @param comboBox the JComboBox to populate with instructor names
+     */
     public void fetchInstructorNamesFromDatabase(JComboBox<String> comboBox) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -595,6 +753,13 @@ public class Database {
     }
 
     // Method to add modules into the DB
+    /**
+     * Adds a module to the database.
+     * 
+     * @param moduleName The name of the module.
+     * @param courseID   The ID of the course to which the module belongs.
+     * @param tutorName  The name of the tutor for the module.
+     */
     public void addModules(String moduleName, int courseID, String tutorName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -614,6 +779,14 @@ public class Database {
     }
 
     // Method to update modules in the DB
+    /**
+     * Updates the information of a module in the database.
+     * 
+     * @param id         The ID of the module to be updated.
+     * @param moduleName The new name of the module.
+     * @param courseID   The new course ID associated with the module.
+     * @param tutorName  The new tutor name associated with the module.
+     */
     public void updateModules(int id, String moduleName, int courseID, String tutorName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -634,6 +807,11 @@ public class Database {
     }
 
     // Method to delete modules from the DB
+    /**
+     * Deletes a module from the database based on the given ID.
+     * 
+     * @param id the ID of the module to be deleted
+     */
     public void deleteModule(int id) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -650,6 +828,11 @@ public class Database {
     }
 
     // Method to fetch modules from the database
+    /**
+     * Fetches modules from the database.
+     * 
+     * @return a list of Modules fetched from the database
+     */
     public List<Modules> fetchModulesFromDatabase() {
         List<Modules> modules = new ArrayList<>();
         try {
@@ -678,6 +861,12 @@ public class Database {
     }
 
     // Method to fetch modules using tutor name as parameter
+    /**
+     * Fetches modules from the database based on the given tutor name.
+     * 
+     * @param tutorName the name of the tutor
+     * @return a list of Modules objects retrieved from the database
+     */
     public List<Modules> fetchModulesFromDatabase(String tutorName) {
         List<Modules> modules = new ArrayList<>();
         try {
@@ -707,6 +896,12 @@ public class Database {
     }
 
     // Method to fetch modules using course id as parameter
+    /**
+     * Fetches modules from the database based on the given course ID.
+     * 
+     * @param courseID the ID of the course
+     * @return a list of Modules objects retrieved from the database
+     */
     public List<Modules> fetchModulesFromDatabase(int courseID) {
         List<Modules> modules = new ArrayList<>();
         try {
@@ -736,6 +931,14 @@ public class Database {
     }
 
     // Method to get course name with email and mode as parameters
+    /**
+     * Retrieves the course name associated with the given email and mode.
+     * 
+     * @param email the email of the user
+     * @param mode  the mode (e.g., "Student", "Instructor")
+     * @return the course name associated with the email and mode, or an empty
+     *         string if not found
+     */
     public String getCourse(String email, String mode) {
         try {
             String courseName = "";
@@ -760,6 +963,12 @@ public class Database {
     }
 
     // Method to get course id with course name as parameter
+    /**
+     * Retrieves the course ID for a given course name from the database.
+     * 
+     * @param courseName the name of the course
+     * @return the course ID if found, or 0 if not found or an error occurs
+     */
     public int getCourseID(String courseName) {
         try {
             int courseID = 0;
@@ -785,6 +994,12 @@ public class Database {
     }
 
     // Method to check if the module already exists
+    /**
+     * Checks if a module exists in the database.
+     * 
+     * @param moduleName the name of the module to check
+     * @return true if the module exists, false otherwise
+     */
     public boolean checkModuleExistence(String moduleName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -810,6 +1025,14 @@ public class Database {
         }
     }
 
+    /**
+     * Checks if a module with the given ID and module name exists in the database.
+     * 
+     * @param id         the ID of the module to be checked
+     * @param moduleName the name of the module to be checked
+     * @return true if a module with the given ID and module name exists, false
+     *         otherwise
+     */
     public boolean checkModuleExistence(int id, String moduleName) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -837,6 +1060,11 @@ public class Database {
     }
 
     // Method to fetch instructor data from the database
+    /**
+     * Fetches the list of instructors from the database.
+     * 
+     * @return the list of instructors fetched from the database
+     */
     public List<Instructors> fetchInstructorsFromDatabase() {
         List<Instructors> instructors = new ArrayList<>();
         try {
@@ -865,6 +1093,12 @@ public class Database {
     }
 
     // Method to fetch instructors with course id as parameter from the database
+    /**
+     * Fetches instructors from the database based on the given course ID.
+     * 
+     * @param courseID the ID of the course
+     * @return a list of Instructors associated with the course
+     */
     public List<Instructors> fetchInstructorsFromDatabase(int courseID) {
         String tutorName[] = getTutorNames(courseID); // Get tutor name using course id
         List<Instructors> instructors = new ArrayList<>();
@@ -898,6 +1132,13 @@ public class Database {
     }
 
     // Method to get all tutor names with course id as parameter
+    /**
+     * Retrieves the names of tutors associated with a given course ID from the
+     * database.
+     *
+     * @param courseID the ID of the course
+     * @return an array of tutor names
+     */
     public String[] getTutorNames(int courseID) {
         try {
             Set<String> tutorNameSet = new LinkedHashSet<>();
@@ -922,6 +1163,13 @@ public class Database {
     }
 
     // Method to update instructors username and email only in the DB
+    /**
+     * Updates the information of an instructor in the database.
+     * 
+     * @param id       the ID of the instructor to update
+     * @param username the new username of the instructor
+     * @param email    the new email of the instructor
+     */
     public void updateInstructors(int id, String username, String email) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -941,6 +1189,11 @@ public class Database {
     }
 
     // Method to delete instructors from the DB
+    /**
+     * Deletes an instructor from the database based on the provided ID.
+     * 
+     * @param id the ID of the instructor to be deleted
+     */
     public void deleteInstructor(int id) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -957,6 +1210,11 @@ public class Database {
     }
 
     // Method to fetch students from the database
+    /**
+     * Fetches the list of students from the database.
+     * 
+     * @return the list of students fetched from the database
+     */
     public List<Students> fetchStudentsFromDatabase() {
         List<Students> students = new ArrayList<>();
         try {
@@ -986,6 +1244,12 @@ public class Database {
     }
 
     // Method to fetch students from the database with course name as parameter
+    /**
+     * Fetches a list of students from the database based on the given course name.
+     * 
+     * @param courseName the name of the course
+     * @return a list of Students objects representing the students in the course
+     */
     public List<Students> fetchStudentsFromDatabase(String courseName) {
         List<Students> students = new ArrayList<>();
         try {
@@ -1017,6 +1281,14 @@ public class Database {
     }
 
     // Method to update students username, email, and course in the DB
+    /**
+     * Updates the information of a student in the database.
+     * 
+     * @param id       the ID of the student to be updated
+     * @param username the new username of the student
+     * @param email    the new email of the student
+     * @param course   the new course of the student
+     */
     public void updateStudents(int id, String username, String email, String course) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1037,6 +1309,11 @@ public class Database {
     }
 
     // Method to delete students from the DB
+    /**
+     * Deletes a student from the database based on the provided student ID.
+     * 
+     * @param id the ID of the student to be deleted
+     */
     public void deleteStudent(int id) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1054,6 +1331,13 @@ public class Database {
 
     // Method to get all id of module from the DB with tutor name and combo box as
     // parameter
+    /**
+     * Retrieves the module IDs associated with a given tutor name and populates
+     * them into a JComboBox.
+     * 
+     * @param tutorName The name of the tutor.
+     * @param comboBox  The JComboBox to populate with module IDs.
+     */
     public void getModuleID(String tutorName, JComboBox<String> comboBox) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1077,6 +1361,13 @@ public class Database {
 
     // Method to get all id of student from the DB with course name and combo box as
     // parameter
+    /**
+     * Retrieves the student IDs for a given course name and populates them into a
+     * JComboBox.
+     * 
+     * @param courseName The name of the course.
+     * @param comboBox   The JComboBox to populate with student IDs.
+     */
     public void getStudentID(String courseName, JComboBox<String> comboBox) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1099,6 +1390,13 @@ public class Database {
     }
 
     // Method to get course id from the DB with course id as parameter
+    /**
+     * Retrieves the course ID associated with a given module ID from the database.
+     * 
+     * @param moduleID the ID of the module
+     * @return the course ID associated with the module, or 0 if not found or an
+     *         error occurs
+     */
     public int getCourseID(int moduleID) {
         try {
             int courseID = 0;
@@ -1125,6 +1423,12 @@ public class Database {
     }
 
     // Method to get course name from the DB with course id as parameter
+    /**
+     * Retrieves the name of a course based on the given course ID.
+     *
+     * @param courseID the ID of the course
+     * @return the name of the course as a String
+     */
     public String getCourseName(int courseID) {
         try {
             String courseName = "";
@@ -1151,6 +1455,15 @@ public class Database {
     }
 
     // Method to add marks into the DB
+    /**
+     * Adds marks for a specific module and student to the database.
+     * 
+     * @param moduleID      the ID of the module
+     * @param studentID     the ID of the student
+     * @param marksObtained the marks obtained by the student
+     * @param grade         the grade obtained by the student
+     * @param eligibility   the eligibility status of the student
+     */
     public void addMarks(int moduleID, int studentID, Float marksObtained, String grade, String eligibility) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1172,6 +1485,13 @@ public class Database {
     }
 
     // Method to check if the marks already exists
+    /**
+     * Checks if marks exist for a given module ID and student ID.
+     * 
+     * @param moduleID  the ID of the module
+     * @param studentID the ID of the student
+     * @return true if marks exist, false otherwise
+     */
     public boolean checkMarksExistence(int moduleID, int studentID) {
         try {
             boolean marksExists = false;
@@ -1199,6 +1519,15 @@ public class Database {
     }
 
     // Method to get username and email from the DB
+    /**
+     * Retrieves the username associated with the given email from the specified
+     * mode.
+     *
+     * @param email the email address to search for
+     * @param mode  the mode to search in (e.g., "Admin", "Student", "Instructor")
+     * @return the username associated with the email, or an empty string if not
+     *         found
+     */
     public String getUsername(String email, String mode) {
         try {
             String username = "";
@@ -1225,6 +1554,14 @@ public class Database {
     }
 
     // Method to get id from the DB
+    /**
+     * Retrieves the ID associated with the given email from the specified mode.
+     * 
+     * @param email The email for which to retrieve the ID.
+     * @param mode  The mode (table name) from which to retrieve the ID.
+     * @return The ID associated with the given email, or 0 if not found or an error
+     *         occurs.
+     */
     public int getID(String email, String mode) {
         try {
             int id = 0;
@@ -1251,6 +1588,16 @@ public class Database {
     }
 
     // Method to update username and email in the DB
+    /**
+     * Updates the username and email of a record in the specified mode's table
+     * based on the given ID.
+     *
+     * @param id       the ID of the record to update
+     * @param username the new username to set
+     * @param email    the new email to set
+     * @param mode     the mode indicating the table to update (e.g., "Student",
+     *                 "Teacher")
+     */
     public void updateUsernameAndEmail(int id, String username, String email, String mode) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1271,6 +1618,14 @@ public class Database {
     }
 
     // Method to update password in the DB
+    /**
+     * Updates the password of a user in the specified mode (table) of the database.
+     * 
+     * @param id       the ID of the user whose password needs to be updated
+     * @param password the new password to be set for the user
+     * @param mode     the mode (table) in which the user's password needs to be
+     *                 updated
+     */
     public void updatePassword(int id, String password, String mode) {
         try {
             dbInfo.setDbUrl("jdbc:mysql://localhost:3306/" + dbInfo.getDbName());
@@ -1290,6 +1645,13 @@ public class Database {
     }
 
     // Method to fetch marks from the database
+    /**
+     * Fetches the marks from the database for a given student ID.
+     * 
+     * @param studentID the ID of the student
+     * @return a list of Marks objects representing the marks obtained by the
+     *         student
+     */
     public List<Marks> fetchMarksFromDatabase(int studentID) {
         List<Marks> marks = new ArrayList<>();
         try {
@@ -1318,6 +1680,12 @@ public class Database {
     }
 
     // Method that takes module id and as parameter and returns the module name
+    /**
+     * Retrieves the module name from the database based on the given module ID.
+     * 
+     * @param moduleID the ID of the module
+     * @return the module name as a String
+     */
     public String getModuleName(int moduleID) {
         try {
             String moduleName = "";
@@ -1344,6 +1712,12 @@ public class Database {
     }
 
     // Method to check if student id is valid
+    /**
+     * Checks if a student with the given student ID exists in the database.
+     * 
+     * @param studentID the ID of the student to check
+     * @return true if the student exists, false otherwise
+     */
     public boolean checkStudentID(int studentID) {
         try {
             boolean studentExists = false;
@@ -1370,6 +1744,13 @@ public class Database {
     }
 
     // Method to calculate the average grade of a student
+    /**
+     * Calculates the average grade for a given student ID based on their obtained
+     * marks.
+     * 
+     * @param studentID the ID of the student
+     * @return the average grade as a String
+     */
     public String calculateAverageGrade(int studentID) {
         try {
             String averageGrade = "";
@@ -1416,6 +1797,12 @@ public class Database {
     }
 
     // Method to calculate the eligibility of a student
+    /**
+     * Calculates the eligibility of a student based on their obtained marks.
+     * 
+     * @param studentID the ID of the student
+     * @return a string indicating the eligibility status of the student
+     */
     public String calculateEligibility(int studentID) {
         try {
             String eligibility = "";

@@ -21,10 +21,11 @@ public class CoursesForm extends javax.swing.JFrame {
     private JTable table;
 
     /**
-     * Creates new form CoursesForm
+     * This class represents the CoursesForm, which is a graphical user interface
+     * for adding courses.
      */
     public CoursesForm() {
-        initComponents();
+        initComponents(); //
         this.setLocationRelativeTo(null);
         jButton1.setText("Add");
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cms/icons/add.png")));
@@ -32,6 +33,10 @@ public class CoursesForm extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Represents a form for managing courses in the Course Management System.
+     * This form allows the user to create or update a course.
+     */
     public CoursesForm(boolean isEditMode, JTable table, int selectedIndex) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -198,6 +203,17 @@ public class CoursesForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Handles the mouse click event for jButton1.
+     * If in edit mode, updates the course in the database with the modified values.
+     * If not in edit mode, adds a new course to the database with the provided
+     * values.
+     * Resets the form after the operation is completed.
+     * Displays a success message and updates the courses table and count in the
+     * dashboard.
+     * 
+     * @param evt The mouse event triggered by the button click
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
         // Check if it is in edit mode
         if (isEditMode) {

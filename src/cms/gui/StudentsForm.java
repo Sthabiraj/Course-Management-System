@@ -28,6 +28,14 @@ public class StudentsForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     * Represents a form for managing student information.
+     * This form is used to edit the details of a selected student.
+     *
+     * @param table         The JTable component that displays the student
+     *                      information.
+     * @param selectedIndex The index of the selected student in the table.
+     */
     public StudentsForm(JTable table, int selectedIndex) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -179,6 +187,18 @@ public class StudentsForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_studentEmailActionPerformed
 
+    /**
+     * Event handler for the mouse click event on jButton1.
+     * Retrieves the selected student's ID, name, email, and course from the form
+     * fields.
+     * Validates the student inputs using the Validation class.
+     * If the inputs are valid, updates the student's information in the database
+     * using the Database class.
+     * Displays a success message using JOptionPane.
+     * Disposes the current form.
+     * Updates the students table and count in the Dashboard class.
+     * Resets the form fields.
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
         int id = Integer.parseInt(table.getValueAt(selectedIndex, 0).toString());
         String name = studentName.getText();

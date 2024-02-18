@@ -324,6 +324,14 @@ public class Signup extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles the action performed when the formMode combo box selection changes.
+     * If the selected mode is "Student", it makes the coursesLabel and formCourse
+     * visible.
+     * Otherwise, it hides the coursesLabel and formCourse.
+     * 
+     * @param evt the action event triggered by the formMode combo box
+     */
     private void formModeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_formModeActionPerformed
         if (formMode.getSelectedItem().toString().equals("Student")) {
             coursesLabel.setVisible(true);
@@ -334,21 +342,36 @@ public class Signup extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_formModeActionPerformed
 
+    /**
+     * Event handler for the mouse click event on jLabel11.
+     * It creates a new instance of the Login class, sets it as visible,
+     * and disposes the current Signup frame.
+     */
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel11MouseClicked
         Login login = new Login();
         login.setVisible(true);
         dispose();
     }// GEN-LAST:event_jLabel11MouseClicked
 
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_loginButtonActionPerformed
-
+    /**
+     * This method is called when the jButton1 is clicked by the user. It handles
+     * the event and performs the necessary actions for user signup.
+     * It retrieves the values entered by the user in the input fields, validates
+     * them, and adds the user to the database if the inputs are valid.
+     * If the user is a student, it also retrieves the selected course and adds it
+     * to the database.
+     * After successful validation and addition to the database, it clears the input
+     * fields, opens the dashboard, and disposes the current window.
+     * If the user already exists in the database, it displays an error message and
+     * clears the input fields.
+     * 
+     * @param evt The MouseEvent object representing the click event on the
+     *            jButton1.
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
         String username = formUsername.getText();
         String email = formEmail.getText();
-        String password = formPassword.getText();
+        String password = new String(formPassword.getPassword());
         String mode = formMode.getSelectedItem().toString();
         String course = formCourse.getSelectedItem().toString();
 
@@ -367,7 +390,7 @@ public class Signup extends javax.swing.JFrame {
                     formPassword.setText("");
                     formMode.setSelectedIndex(0); // Set the combo box to its initial state
 
-                    Dashboard dash = new Dashboard();
+                    Dashboard dash = new Dashboard(email, password, mode);
                     dash.setVisible(true);
                     dispose();
                 }
@@ -385,7 +408,7 @@ public class Signup extends javax.swing.JFrame {
                     formCourse.setSelectedIndex(0); // Set the combo box to its initial state
                     formCourse.setSelectedIndex(0); // Set the combo box to its initial state
 
-                    Dashboard dash = new Dashboard();
+                    Dashboard dash = new Dashboard(email, password, mode);
                     dash.setVisible(true);
                     dispose();
                 }
@@ -404,12 +427,6 @@ public class Signup extends javax.swing.JFrame {
     private void formPasswordActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_formPasswordActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_formPasswordActionPerformed
-
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_loginButtonMouseClicked
-        Login login = new Login();
-        login.setVisible(true);
-        dispose();
-    }// GEN-LAST:event_loginButtonMouseClicked
 
     /**
      * @param args the command line arguments

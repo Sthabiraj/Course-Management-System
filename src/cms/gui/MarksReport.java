@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package cms.gui;
 
 import cms.db.Database;
@@ -10,10 +6,6 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author biraj
- */
 public class MarksReport extends javax.swing.JFrame {
 
     /**
@@ -24,6 +16,18 @@ public class MarksReport extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     * Constructs a new MarksReport object with the given student ID.
+     * Initializes the components of the GUI window, sets the location of the
+     * window,
+     * removes unnecessary labels and buttons, updates the table with the marks for
+     * the student,
+     * calculates the average grade and sets the average grade label, and determines
+     * the eligibility
+     * and sets the eligibility label.
+     * 
+     * @param id the student ID for which the marks report is generated
+     */
     public MarksReport(int id) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -33,13 +37,17 @@ public class MarksReport extends javax.swing.JFrame {
         jPanel1.repaint(); // Repaint the jPanel1 component
         updateTable(id); // Update the table with the marks for the given studentID
         Database db = new Database();
-        avgGrade.setText(db.calculateAverageGrade(id)); // Set the average grade label with the calculated
-                                                        // average grade
-        eligibility.setText(db.calculateEligibility(id)); // Set the eligibility label with the calculated
-                                                          // eligibility
+        avgGrade.setText(db.calculateAverageGrade(id)); // Set the average grade label with the calculated average grade
+        eligibility.setText(db.calculateEligibility(id)); // Set the eligibility label with the calculated eligibility
     }
 
     // Method to update the table with the marks
+    /**
+     * Updates the table with the marks of a specific student.
+     * 
+     * @param studentID the ID of the student whose marks are to be fetched and
+     *                  displayed
+     */
     public void updateTable(int studentID) {
         // Fetch marks from database
         Database db = new Database();
@@ -229,6 +237,12 @@ public class MarksReport extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method is called when a key is typed in the studentID field.
+     * It resets the table, average grade, and eligibility fields.
+     * 
+     * @param evt The KeyEvent object representing the key event.
+     */
     private void studentIDKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_studentIDKeyTyped
         // reset the table, avgGrade and eligibility when the studentID is being typed
         DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
@@ -241,6 +255,14 @@ public class MarksReport extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_studentIDActionPerformed
 
+    /**
+     * Event handler for the "generate" button click event.
+     * Retrieves the student ID from the input field, checks if it is valid,
+     * updates the table with the marks, calculates and displays the average grade,
+     * and calculates and displays the eligibility.
+     * 
+     * @param evt The mouse event that triggered the button click
+     */
     private void generateBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_generateBtnMouseClicked
         int studentID = Integer.parseInt(this.studentID.getText()); // get student id from input field
         // check if student id is valid

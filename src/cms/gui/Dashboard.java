@@ -19,6 +19,13 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+/**
+ * The Dashboard class represents the main GUI window of the Course Management
+ * System.
+ * It extends the javax.swing.JFrame class and provides methods for updating
+ * various tables
+ * and performing search and filter operations.
+ */
 public class Dashboard extends javax.swing.JFrame {
     private int id;
     private static String username;
@@ -75,6 +82,11 @@ public class Dashboard extends javax.swing.JFrame {
         return course;
     }
 
+    /**
+     * Updates the count of courses, instructors, and students in the dashboard.
+     * Retrieves the length of the corresponding tables from the database and sets
+     * the count in the UI.
+     */
     public static void updateCount() {
         Database db = new Database();
         coursesCount.setText(Integer.toString(db.getLength("courses")));
@@ -82,6 +94,16 @@ public class Dashboard extends javax.swing.JFrame {
         studentsCount.setText(Integer.toString(db.getLength("student")));
     }
 
+    /**
+     * Applies a search filter to a JTable based on the text entered in a
+     * JTextField.
+     * The filter is applied to the DefaultTableModel of the JTable, and only rows
+     * that
+     * match the filter are displayed.
+     *
+     * @param tableName     The JTable to apply the search filter to.
+     * @param textFieldName The JTextField containing the text to use as the filter.
+     */
     public void searchFilter(JTable tableName, JTextField textFieldName) {
         DefaultTableModel model = (DefaultTableModel) tableName.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -89,6 +111,12 @@ public class Dashboard extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(textFieldName.getText().trim()));
     }
 
+    /**
+     * Filters the rows of a JTable based on a given filter string.
+     * 
+     * @param tableName The JTable to be filtered.
+     * @param filter    The filter string to be applied.
+     */
     public void tableFilter(JTable tableName, String filter) {
         DefaultTableModel model = (DefaultTableModel) tableName.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -131,6 +159,12 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Updates the modules table in the dashboard GUI.
+     * Fetches the modules from the database based on the user's mode (Admin,
+     * Instructor, or Student),
+     * and populates the modules table with the retrieved data.
+     */
     public static void updateModulesTable() {
         Database db = new Database();
         modulesTable.repaint();
@@ -157,6 +191,13 @@ public class Dashboard extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Updates the tutors table with the latest data from the database.
+     * If the mode is "Admin", fetches all instructors from the database.
+     * If the mode is "Student", fetches instructors associated with the current
+     * course.
+     * Populates the tutors table with the fetched data.
+     */
     public static void updateTutorsTable() {
         Database db = new Database();
         tutorsTable.repaint();
@@ -180,6 +221,12 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Updates the students table in the dashboard.
+     * Retrieves the student data from the database based on the user's mode (Admin
+     * or Instructor),
+     * and populates the table with the fetched data.
+     */
     public static void updateStudentsTable() {
         Database db = new Database();
         studentsTable.repaint();
@@ -220,6 +267,18 @@ public class Dashboard extends javax.swing.JFrame {
         updateStudentsTable();
     }
 
+    /**
+     * Represents the dashboard of the Course Management System.
+     * This class is responsible for initializing the dashboard components,
+     * setting the location of the dashboard window, and performing
+     * specific actions based on the user's mode (Instructor or Student).
+     * It also updates the activities, courses, modules, tutors, and students
+     * tables.
+     *
+     * @param email    the email of the user
+     * @param password the password of the user
+     * @param mode     the mode of the user (Instructor or Student)
+     */
     public Dashboard(String email, String password, String mode) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -1712,6 +1771,12 @@ public class Dashboard extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Unimplemented method 'profileUsernameActionPerformed'");
     }
 
+    /**
+     * Handles the mouse click event for jButton16.
+     * If the mode is "Admin", it opens the MarksReport window.
+     * If the mode is "Instructor", it opens the MarksForm window with the current
+     * username.
+     */
     private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton16MouseClicked
         if (mode.equals("Admin")) {
             MarksReport mr = new MarksReport();
@@ -1732,9 +1797,18 @@ public class Dashboard extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Unimplemented method 'oldPasswordActionPerformed'");
     }
 
+    /**
+     * Handles the mouse click event for jButton11.
+     * Validates the old and new passwords and updates the password in the database
+     * if valid.
+     * Displays a success message if the password is updated successfully.
+     * Resets the old and new password fields.
+     * 
+     * @param evt The mouse event that triggered the method.
+     */
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton11MouseClicked
-        String oldPass = oldPassword.getText();
-        String newPass = newPassword.getText();
+        String oldPass = new String(oldPassword.getPassword());
+        String newPass = new String(newPassword.getPassword());
         Validation val = new Validation();
         if (val.validatePassword(oldPass, newPass, getPassword())) {
             Database db = new Database();
@@ -1746,6 +1820,14 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jButton11MouseClicked
 
+    /**
+     * Event handler for the mouseClicked event of jButton10.
+     * Updates the user's profile information if the entered username and email are
+     * valid.
+     * Displays a success message if the profile is updated successfully.
+     * 
+     * @param evt The MouseEvent that triggered the event.
+     */
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton10MouseClicked
         String username = profileUsername.getText();
         String email = profileEmail.getText();
@@ -1757,6 +1839,21 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jButton10MouseClicked
 
+    /**
+     * Event handler for the mouse click event on jButton17.
+     * This method is called when the button is clicked.
+     * It retrieves the selected row index from studentsTable and performs the
+     * following actions:
+     * - If no row is selected and the table is empty, it displays a message
+     * indicating that the table is empty.
+     * - If no row is selected but the table is not empty, it displays a message
+     * indicating that a student must be selected.
+     * - If a row is selected, it creates a new instance of StudentsForm and sets
+     * the selected row index.
+     * It then makes the form visible.
+     *
+     * @param evt The MouseEvent object representing the mouse click event.
+     */
     private void jButton17MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton17MouseClicked
         int selectedIndex = studentsTable.getSelectedRow();
         if (selectedIndex == -1) {
@@ -1775,6 +1872,15 @@ public class Dashboard extends javax.swing.JFrame {
         searchFilter(studentsTable, jTextField7);
     }// GEN-LAST:event_jTextField7KeyReleased
 
+    /**
+     * Handles the mouse click event for jButton21.
+     * If a tutor is selected from the tutorsTable, it prompts the user with a
+     * confirmation dialog to delete the tutor.
+     * If the user confirms the deletion, the tutor is deleted from the database and
+     * the tutorsTable is updated.
+     * If no tutor is selected or the user cancels the deletion, appropriate
+     * messages are displayed.
+     */
     private void jButton21MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton21MouseClicked
         int selectedIndex = tutorsTable.getSelectedRow();
         if (selectedIndex == -1) {
@@ -1798,6 +1904,14 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jButton21MouseClicked
 
+    /**
+     * Event handler for the mouse click event on jButton20.
+     * It performs the following actions:
+     * - Retrieves the selected row index from tutorsTable.
+     * - If no row is selected, displays a message if the table is empty or prompts
+     * the user to select a tutor.
+     * - If a row is selected, opens the TutorsForm with the selected row index.
+     */
     private void jButton20MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton20MouseClicked
         int selectedIndex = tutorsTable.getSelectedRow();
         if (selectedIndex == -1) {
@@ -1820,6 +1934,19 @@ public class Dashboard extends javax.swing.JFrame {
         searchFilter(modulesTable, jTextField6);
     }// GEN-LAST:event_jTextField6KeyReleased
 
+    /**
+     * Handles the mouse click event for jButton15.
+     * If the mode is "Admin", it checks if a module is selected in the
+     * modulesTable.
+     * If no module is selected, it displays a message indicating that the table is
+     * empty or a module must be selected.
+     * If a module is selected, it prompts the user with a confirmation dialog to
+     * delete the selected module.
+     * If the user confirms the deletion, it deletes the module from the database,
+     * updates the modulesTable, and displays a success message.
+     * If the mode is "Student", it opens the MarksReport window for the current
+     * user.
+     */
     private void jButton15MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton15MouseClicked
         if (mode.equals("Admin")) {
             int selectedIndex = modulesTable.getSelectedRow();
@@ -1849,6 +1976,16 @@ public class Dashboard extends javax.swing.JFrame {
 
     }// GEN-LAST:event_jButton15MouseClicked
 
+    /**
+     * Event handler for the mouse click event on jButton14.
+     * It performs the following actions:
+     * - Retrieves the selected index from modulesTable.
+     * - If no module is selected, it displays an appropriate message.
+     * - If a module is selected, it creates a new ModulesForm instance and displays
+     * it.
+     * 
+     * @param evt The MouseEvent object representing the mouse click event.
+     */
     private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton14MouseClicked
         int selectedIndex = modulesTable.getSelectedRow();
         if (selectedIndex == -1) {
@@ -1863,6 +2000,10 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jButton14MouseClicked
 
+    /**
+     * Event handler for the mouse click event on jButton13.
+     * Opens the ModulesForm window.
+     */
     private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton13MouseClicked
         ModulesForm mf = new ModulesForm();
         mf.setVisible(true);
@@ -1871,10 +2012,6 @@ public class Dashboard extends javax.swing.JFrame {
     private void jScrollPane5KeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_jScrollPane5KeyReleased
         // TODO add your handling code here:
     }// GEN-LAST:event_jScrollPane5KeyReleased
-
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton20ActionPerformed
         // TODO add your handling code here:
@@ -1923,6 +2060,19 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_jButton1MouseClicked
 
+    /**
+     * Event handler for the mouse click event on jButton3.
+     * It retrieves the selected row index from the coursesTable and performs the
+     * following actions:
+     * - If no row is selected and the table is empty, it displays a message
+     * indicating that the table is empty.
+     * - If no row is selected but the table is not empty, it displays a message
+     * indicating that a course must be selected.
+     * - If a row is selected, it creates a new instance of the CoursesForm class
+     * with the selected row index and displays it.
+     *
+     * @param evt The MouseEvent object representing the mouse click event.
+     */
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton3MouseClicked
         int selectedIndex = coursesTable.getSelectedRow();
         if (selectedIndex == -1) {
@@ -1945,14 +2095,6 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jTextField5ActionPerformed
-
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton10ActionPerformed
@@ -1961,14 +2103,18 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton11ActionPerformed
 
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jPasswordField2ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jPasswordField2ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton12ActionPerformed
-
+    /**
+     * Event handler for the mouse click event on the dashboard button.
+     * This method is called when the dashboard button is clicked.
+     * It performs the following actions:
+     * - Sets the selected index of the tabs to 0.
+     * - Sets the font of the dashboard button to "Poppins ExtraBold" with a font
+     * size of 18.
+     * - Sets the font of the courses, modules, tutors, students, and settings
+     * buttons to "Poppins Medium" with a font size of 16.
+     * 
+     * @param evt The MouseEvent object representing the mouse click event.
+     */
     private void dashboardBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_dashboardBtnMouseClicked
         tabs.setSelectedIndex(0);
         dashboardBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
@@ -1979,6 +2125,15 @@ public class Dashboard extends javax.swing.JFrame {
         settingsBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
     }// GEN-LAST:event_dashboardBtnMouseClicked
 
+    /**
+     * Event handler for the mouse click event on the coursesBtn.
+     * This method is called when the coursesBtn is clicked.
+     * It performs the following actions:
+     * - Sets the selected index of the tabs to 1.
+     * - Sets the font of coursesBtn to "Poppins ExtraBold" with size 18.
+     * - Sets the font of dashboardBtn, modulesBtn, tutorsBtn, studentsBtn, and
+     * settingsBtn to "Poppins Medium" with size 16.
+     */
     private void coursesBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_coursesBtnMouseClicked
         tabs.setSelectedIndex(1);
         coursesBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
@@ -1989,6 +2144,14 @@ public class Dashboard extends javax.swing.JFrame {
         settingsBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
     }// GEN-LAST:event_coursesBtnMouseClicked
 
+    /**
+     * Event handler for the mouse click event on the modulesBtn.
+     * This method is called when the modulesBtn is clicked.
+     * It sets the selected index of the tabs to 2, changes the font styles of
+     * various buttons.
+     * 
+     * @param evt The MouseEvent object representing the mouse click event.
+     */
     private void modulesBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tutorsBtnMouseClicked
         tabs.setSelectedIndex(2);
         modulesBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
@@ -1999,6 +2162,16 @@ public class Dashboard extends javax.swing.JFrame {
         settingsBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
     }// GEN-LAST:event_tutorsBtnMouseClicked
 
+    /**
+     * Event handler for the mouse click event on the tutorsBtn.
+     * This method is called when the tutorsBtn is clicked.
+     * It performs the following actions:
+     * - Sets the selected index of the tabs to 3.
+     * - Sets the font of the tutorsBtn to "Poppins ExtraBold" with a font size of
+     * 18.
+     * - Sets the font of the coursesBtn, modulesBtn, dashboardBtn, studentsBtn, and
+     * settingsBtn to "Poppins Medium" with a font size of 16.
+     */
     private void tutorsBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tutorsBtnMouseClicked
         tabs.setSelectedIndex(3);
         tutorsBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
@@ -2009,6 +2182,15 @@ public class Dashboard extends javax.swing.JFrame {
         settingsBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
     }// GEN-LAST:event_tutorsBtnMouseClicked
 
+    /**
+     * Event handler for the mouse click event on the studentsBtn.
+     * This method is called when the studentsBtn is clicked.
+     * It performs the following actions:
+     * - Sets the selected index of the tabs to 4.
+     * - Sets the font of studentsBtn to "Poppins ExtraBold" with size 18.
+     * - Sets the font of coursesBtn, modulesBtn, tutorsBtn, dashboardBtn, and
+     * settingsBtn to "Poppins Medium" with size 16.
+     */
     private void studentsBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_studentsBtnMouseClicked
         tabs.setSelectedIndex(4);
         studentsBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
@@ -2019,6 +2201,26 @@ public class Dashboard extends javax.swing.JFrame {
         settingsBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
     }// GEN-LAST:event_studentsBtnMouseClicked
 
+    /**
+     * Event handler for the mouse click event on the settings button.
+     * This method is called when the settings button is clicked.
+     * It performs the following actions:
+     * - Sets the selected index of the tabs to 5.
+     * - Sets the font of the settings button to "Poppins ExtraBold" with a font
+     * size of 18.
+     * - Sets the font of the courses button to "Poppins Medium" with a font size of
+     * 16.
+     * - Sets the font of the modules button to "Poppins Medium" with a font size of
+     * 16.
+     * - Sets the font of the tutors button to "Poppins Medium" with a font size of
+     * 16.
+     * - Sets the font of the students button to "Poppins Medium" with a font size
+     * of 16.
+     * - Sets the font of the dashboard button to "Poppins Medium" with a font size
+     * of 16.
+     *
+     * @param evt The MouseEvent object representing the mouse click event.
+     */
     private void settingsBtnMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_settingsBtnMouseClicked
         tabs.setSelectedIndex(5);
         settingsBtn.setFont(new Font("Poppins ExtraBold", Font.PLAIN, 18));
@@ -2028,12 +2230,6 @@ public class Dashboard extends javax.swing.JFrame {
         studentsBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
         dashboardBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 16));
     }// GEN-LAST:event_settingsBtnMouseClicked
-
-    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel24MouseClicked
-        Login l = new Login();
-        l.setVisible(true);
-        dispose();
-    }// GEN-LAST:event_jLabel24MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -2067,10 +2263,10 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton18ActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jPasswordField1ActionPerformed
-
+    /**
+     * Event handler for the mouse click event on jButton2.
+     * Creates a new instance of CoursesForm and makes it visible.
+     */
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton2MouseClicked
         CoursesForm cf = new CoursesForm();
         cf.setVisible(true);
